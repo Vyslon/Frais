@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
@@ -126,11 +125,19 @@ def une_fiche_frais(request, mois):
     usr = request.user
     try:
         ficheFrais = FicheFrais.objects.get(mois=mois, visiteur=usr)
+        fichesFraisPrecedentes = FicheFrais.objects.filter(mois__lt=mois).order_by('-mois')
     except:
         raise Http404("Pas de fiche de frais correspondante")
 
     lignesFrais = LigneFraisForfait.objects.filter(fiche=ficheFrais)
     lignesFraisHF = LigneFraisHorsForfait.objects.filter(fiche=ficheFrais)
+
+    if (sum([frais.quantite for frais in lignesFrais]) + sum([fraisHF.montant for fraisHF in
+                                                              lignesFraisHF]) != 0):
+        for ficheFraisPrecedente in fichesFraisPrecedentes:
+            if ficheFraisPrecedente.etat == ficheFraisPrecedente.Etat.ENCOURS:
+                ficheFraisPrecedente.etat = ficheFrais.Etat.CLOTUREE
+                ficheFraisPrecedente.save()
 
     context = {
         'ficheFrais': ficheFrais,
