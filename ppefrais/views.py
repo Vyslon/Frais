@@ -91,7 +91,7 @@ def link_callback(uri, rel):
 
 
 def fiches_frais(request):
-    usr = Visiteur.objects.filter(id=request.user.id)[0]
+    usr = Visiteur.objects.get(id=request.user.id)
 
     dateMinimum = str(datetime.datetime.now().year - 1) + '01'
     ficheFrais = FicheFrais.objects.filter(visiteur=usr).order_by('-mois').extra(where=['mois>=%s'],
