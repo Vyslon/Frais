@@ -91,31 +91,13 @@ def link_callback(uri, rel):
 
 
 def fiches_frais(request):
-    moisEntier = [
-        'None',
-        'Janvier',
-        'Février',
-        'Mars',
-        'Avril',
-        'Mai',
-        'Juin',
-        'Juillet',
-        'Août',
-        'Septembre',
-        'Octobre',
-        'Novembre',
-        'Décembre'
-    ]
     usr = Visiteur.objects.filter(id=request.user.id)[0]
 
     dateMinimum = str(datetime.datetime.now().year - 1) + '01'
     ficheFrais = FicheFrais.objects.filter(visiteur=usr).order_by('-mois').extra(where=['mois>=%s'],
                                                                                 params=[dateMinimum])
-    nomMois = [moisEntier[int(elt.mois.strftime('%m').strip('0'))] for elt in ficheFrais]
-    annee = [elt.mois.strftime('%Y') for elt in ficheFrais]
-
     context = {
-        'fiches_nomMois': zip(ficheFrais, nomMois, annee)
+        'fiches_nomMois': ficheFrais
     }
 
     return render(request, 'ficheFraisSelect.html', context)

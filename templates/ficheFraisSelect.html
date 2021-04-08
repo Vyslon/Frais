@@ -28,26 +28,26 @@
                         {% for elt in fiches_nomMois %}
                             <tr>
                                 <th>
-                                    <a href="{% url 'une-fiche' elt.0.mois|date:'Ym' %}">
-                                        {{ elt.1 }} {{ elt.2 }}
+                                    <a href="{% url 'une-fiche' elt.mois|date:'Ym' %}">
+                                        {{ elt.mois|date:'F'|capfirst }} {{ elt.mois|date:'Y' }}
                                     </a>
                                 </th>
                                 <th>
-                                    {% with etat=elt.0.etat enumEtat=elt.0.Etat %}
+                                    {% with etat=elt.etat enumEtat=elt.Etat %}
                                         {% if etat == enumEtat.ENCOURS %}
-                                            <span class="tag is-light">{{ elt.0.get_etat_display }}</span>
+                                            <span class="tag is-light">{{ elt.get_etat_display }}</span>
                                         {% elif etat == enumEtat.CLOTUREE %}
-                                            <span class="tag is-info">{{ elt.0.get_etat_display }}</span>
+                                            <span class="tag is-info">{{ elt.get_etat_display }}</span>
                                         {% elif etat == enumEtat.VALIDEE %}
-                                            <span class="tag is-warning">{{ elt.0.get_etat_display }}</span>
+                                            <span class="tag is-warning">{{ elt.get_etat_display }}</span>
                                         {% else %}
-                                            <span class="tag is-success">{{ elt.0.get_etat_display }}</span>
+                                            <span class="tag is-success">{{ elt.get_etat_display }}</span>
                                         {% endif %}
                                     {% endwith %}
                                 </th>
                                 <th>
-                                    {% if elt.0.etat != elt.0.Etat.ENCOURS %}
-                                        <a href="{% url 'une-fiche-pdf' elt.0.mois %}"
+                                    {% if elt.etat != elt.Etat.ENCOURS %}
+                                        <a href="{% url 'une-fiche-pdf' elt.mois %}"
                                            class="button is-small is-primary">
                                             <span class="icon is-small">
                                                 <i class="fas fa-file-pdf"></i>
