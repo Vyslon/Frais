@@ -105,11 +105,9 @@ def fiches_frais(request):
 
 def une_fiche_frais(request, mois):
     usr = request.user
-    try:
-        ficheFrais = FicheFrais.objects.get(mois=mois, visiteur=usr)
-        fichesFraisPrecedentes = FicheFrais.objects.filter(mois__lt=mois).order_by('-mois')
-    except:
-        raise Http404("Pas de fiche de frais correspondante")
+
+    ficheFrais = get_object_or_404(FicheFrais, mois=mois, visiteur=usr)
+    fichesFraisPrecedentes = FicheFrais.objects.filter(mois__lt=mois).order_by('-mois')
 
     lignesFrais = LigneFraisForfait.objects.filter(fiche=ficheFrais)
     lignesFraisHF = LigneFraisHorsForfait.objects.filter(fiche=ficheFrais)
