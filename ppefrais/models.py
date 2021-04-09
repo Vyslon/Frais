@@ -74,7 +74,7 @@ class FicheFrais(models.Model):
 
 
 class AbstractLigneFrais(models.Model):
-    fiche = models.ForeignKey('FicheFrais', on_delete=models.RESTRICT, default=None)
+    fiche = models.ForeignKey('FicheFrais', on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return str(self.fiche.id) + str(self.id) + '(Abstr.)'
