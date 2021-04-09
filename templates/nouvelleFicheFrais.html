@@ -25,7 +25,21 @@
                                     {% endfor %}
                                     <div class="field">
                                         <label class="label">Mois</label>
-                                        <p>{% render_field form.mois %}</p>
+                                        {% with w_mois=form.mois.subwidgets.0 %}
+                                            <div class="control">
+                                                <div class="select">
+                                                    {% render_field w_mois %}
+                                                </div>
+                                            </div>
+                                        {% endwith %}
+                                    </div>
+                                    <div class="field">
+                                        <label class="label">Année</label>
+                                        {% with w_annee=form.mois.subwidgets.1 %}
+                                            <div class="control">
+                                                {% render_field w_annee %}
+                                            </div>
+                                        {% endwith %}
                                         {% for error in form.mois.errors %}
                                             <p class="help is-danger">{{ error }}</p>
                                         {% endfor %}
