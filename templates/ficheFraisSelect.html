@@ -15,50 +15,53 @@
                             de frais
                         </a>
                     </div>
-
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Mois</th>
-                            <th>Etat</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for elt in fiches_nomMois %}
+                    {% if fiches_nomMois %}
+                        <table class="table">
+                            <thead>
                             <tr>
-                                <th>
-                                    <a href="{% url 'une-fiche' elt.mois|date:'Ym' %}">
-                                        {{ elt.mois|date:'F'|capfirst }} {{ elt.mois|date:'Y' }}
-                                    </a>
-                                </th>
-                                <th>
-                                    {% with etat=elt.etat enumEtat=elt.Etat %}
-                                        {% if etat == enumEtat.ENCOURS %}
-                                            <span class="tag is-light">{{ elt.get_etat_display }}</span>
-                                        {% elif etat == enumEtat.CLOTUREE %}
-                                            <span class="tag is-info">{{ elt.get_etat_display }}</span>
-                                        {% elif etat == enumEtat.VALIDEE %}
-                                            <span class="tag is-warning">{{ elt.get_etat_display }}</span>
-                                        {% else %}
-                                            <span class="tag is-success">{{ elt.get_etat_display }}</span>
-                                        {% endif %}
-                                    {% endwith %}
-                                </th>
-                                <th>
-                                    {% if elt.etat != elt.Etat.ENCOURS %}
-                                        <a href="{% url 'une-fiche-pdf' elt.mois %}"
-                                           class="button is-small is-primary">
+                                <th>Mois</th>
+                                <th>Etat</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for elt in fiches_nomMois %}
+                                <tr>
+                                    <th>
+                                        <a href="{% url 'une-fiche' elt.mois|date:'Ym' %}">
+                                            {{ elt.mois|date:'F'|capfirst }} {{ elt.mois|date:'Y' }}
+                                        </a>
+                                    </th>
+                                    <th>
+                                        {% with etat=elt.etat enumEtat=elt.Etat %}
+                                            {% if etat == enumEtat.ENCOURS %}
+                                                <span class="tag is-light">{{ elt.get_etat_display }}</span>
+                                            {% elif etat == enumEtat.CLOTUREE %}
+                                                <span class="tag is-info">{{ elt.get_etat_display }}</span>
+                                            {% elif etat == enumEtat.VALIDEE %}
+                                                <span class="tag is-warning">{{ elt.get_etat_display }}</span>
+                                            {% else %}
+                                                <span class="tag is-success">{{ elt.get_etat_display }}</span>
+                                            {% endif %}
+                                        {% endwith %}
+                                    </th>
+                                    <th>
+                                        {% if elt.etat != elt.Etat.ENCOURS %}
+                                            <a href="{% url 'une-fiche-pdf' elt.mois %}"
+                                               class="button is-small is-primary">
                                             <span class="icon is-small">
                                                 <i class="fas fa-file-pdf"></i>
                                             </span>
-                                            <span>PDF</span>
-                                        </a>
-                                    {% endif %}
-                                </th>
-                            </tr>
-                        {% empty %}
-                            <div class="notification is-info" style="max-width: 260px;">
+                                                <span>PDF</span>
+                                            </a>
+                                        {% endif %}
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="notification is-info" style="max-width: 260px;">
                                 <span class="icon-text">
                                     <span class="icon">
                                         <i class="fas fa-info-circle"></i>
@@ -67,10 +70,8 @@
                                         Aucune fiche de frais.
                                     </span>
                                 </span>
-                            </div>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
