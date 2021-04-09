@@ -1,6 +1,5 @@
 from django.db import IntegrityError
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import Http404
 from django.urls import reverse
 
 from .forms import LigneFraisHorsForfaitForm
