@@ -20,10 +20,8 @@ def une_fiche_frais_pdf(request, mois):
     template_path = 'ficheFraisPDF.html'
 
     usr = request.user
-    try:
-        ficheFrais = FicheFrais.objects.get(mois=mois, visiteur=usr)
-    except:
-        raise Http404("Pas de fiche de frais correspondante")
+
+    ficheFrais = get_object_or_404(FicheFrais, mois=mois, visiteur=usr)
 
     if ficheFrais.etat == ficheFrais.Etat.ENCOURS:
         return redirect(reverse('une-fiche', args=[mois]))
