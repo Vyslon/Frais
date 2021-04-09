@@ -17,43 +17,39 @@ from django.contrib.staticfiles import finders
 
 
 def une_fiche_frais_pdf(request, mois):
-    template_path = 'ficheFraisPDF.html'
-
     usr = request.user
-
     ficheFrais = get_object_or_404(FicheFrais, mois=mois, visiteur=usr)
 
     if ficheFrais.etat == ficheFrais.Etat.ENCOURS:
         return redirect(reverse('une-fiche', args=[mois]))
 
+    lignesFrais = LigneFraisForfait.objects.filter(fiche=ficheFrais)
+    lignesFraisHF = LigneFraisHorsForfait.objects.filter(fiche=ficheFrais)
+
+    context = {
+        'ficheFrais': ficheFrais,
+        'lignesFraisForfait': lignesFrais,
+        'lignesFraisHorsForfait': lignesFraisHF
+    }
+
+    # Create a Django response object, and specify content_type as pdf
+    if usr.first_name and usr.last_name:
+        usrname = str(usr.id) + ' ' + usr.first_name + ' ' + usr.last_name
     else:
-        lignesFrais = LigneFraisForfait.objects.filter(fiche=ficheFrais)
-        lignesFraisHF = LigneFraisHorsForfait.objects.filter(fiche=ficheFrais)
+        usrname = str(usr.id) + ' ' + usr.username
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="Fiche frais {mois}-VIS{usrname}.pdf"'
+    # find the template and render it.
+    template = get_template('ficheFraisPDF.html')
+    html = template.render(context)
 
-        context = {
-            'ficheFrais': ficheFrais,
-            'lignesFraisForfait': lignesFrais,
-            'lignesFraisHorsForfait': lignesFraisHF
-        }
-
-        # Create a Django response object, and specify content_type as pdf
-        if usr.first_name and usr.last_name:
-            usrname = str(usr.id) + ' ' + usr.first_name + ' ' + usr.last_name
-        else:
-            usrname = str(usr.id) + ' ' + usr.username
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="Fiche frais {mois}-VIS{usrname}.pdf"'
-        # find the template and render it.
-        template = get_template(template_path)
-        html = template.render(context)
-
-        # create a pdf
-        pisa_status = pisa.CreatePDF(
-            html, dest=response, link_callback=link_callback)
-        # if error then show some funy view
-        if pisa_status.err:
-            return HttpResponse('We had some errors <pre>' + html + '</pre>')
-        return response
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response, link_callback=link_callback)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 
 def link_callback(uri, rel):
