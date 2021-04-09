@@ -15,7 +15,7 @@
                             de frais
                         </a>
                     </div>
-                    {% if fiches_nomMois %}
+                    {% if fiches %}
                         <table class="table">
                             <thead>
                             <tr>
@@ -25,7 +25,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for elt in fiches_nomMois %}
+                            {% for elt in fiches %}
                                 <tr>
                                     <th>
                                         <a href="{% url 'une-fiche' elt.mois|date:'Ym' %}">

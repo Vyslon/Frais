@@ -97,16 +97,14 @@ def fiches_frais(request):
     ficheFrais = FicheFrais.objects.filter(visiteur=usr).order_by('-mois').extra(where=['mois>=%s'],
                                                                                 params=[dateMinimum])
     context = {
-        'fiches_nomMois': ficheFrais
+        'fiches': ficheFrais
     }
 
     return render(request, 'ficheFraisSelect.html', context)
 
 
 def une_fiche_frais(request, mois):
-    usr = request.user
-
-    ficheFrais = get_object_or_404(FicheFrais, mois=mois, visiteur=usr)
+    ficheFrais = get_object_or_404(FicheFrais, mois=mois, visiteur=request.user)
     fichesFraisPrecedentes = FicheFrais.objects.filter(mois__lt=mois).order_by('-mois')
 
     lignesFrais = LigneFraisForfait.objects.filter(fiche=ficheFrais)
