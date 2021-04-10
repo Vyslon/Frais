@@ -8,10 +8,10 @@ from django.utils.text import slugify
 
 
 class Visiteur(AbstractUser):
-    adresse = models.CharField(max_length=30, null=True, blank=True)
-    code_postal = models.CharField(max_length=5, null=True, blank=True)
-    ville = models.CharField(max_length=30, null=True, blank=True)
-    date_embauche = models.DateField(null=True, blank=True, default=timezone.now)
+    adresse = models.CharField(max_length=30, blank=True)
+    code_postal = models.CharField(max_length=5, blank=True)
+    ville = models.CharField(max_length=30, blank=True)
+    date_embauche = models.DateField(blank=True, default=timezone.now)
 
     class Meta:
         verbose_name = 'Visiteur médical'
@@ -41,9 +41,9 @@ class FicheFrais(models.Model):
     etat = models.CharField(max_length=3, choices=Etat.choices, default=Etat.ENCOURS)
     visiteur = models.ForeignKey('Visiteur', on_delete=models.RESTRICT, default=None)
     mois = MonthField(null=False, blank=False)
-    nb_justificatifs = models.PositiveIntegerField(null=True, blank=True, default=0)
-    montant_valide = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
-    date_modif = models.DateField(null=True, default=timezone.now)
+    nb_justificatifs = models.PositiveIntegerField(blank=True, default=0)
+    montant_valide = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=0)
+    date_modif = models.DateField(blank=True, default=timezone.now)
 
     def total_frais_forfaitaires(self):
         total = 0
@@ -117,8 +117,8 @@ class LigneFraisForfait(AbstractLigneFrais):
         NUITHOTEL = 'NUI', _('Nuitée hôtel')
         RESTAU = 'REP', _('Repas restaurant')
 
-    frais_forfait = models.CharField(max_length=3, choices=FraisForfait.choices, default=None)
-    quantite = models.PositiveIntegerField(blank=False, null=False, default=0)
+    frais_forfait = models.CharField(max_length=3, choices=FraisForfait.choices)
+    quantite = models.PositiveIntegerField(blank=False)
 
     @property
     def total(self):
