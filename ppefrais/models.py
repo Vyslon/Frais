@@ -19,11 +19,11 @@ class Visiteur(AbstractUser):
 
     def save(self, *args, **kwargs):
         # Gives a username
-        if self.username is None:
+        if not self.username:
             self.username = slugify(self.first_name[0] + self.last_name)
         # Gives a password
         # password is date_embauche formatted as ddmmyyyy (i.e 31121999 for December 31, 1999)
-        if self.password is None:
+        if not self.password:
             self.set_password(self.date_embauche.strftime("%d%m%Y"))
         return super(Visiteur, self).save(*args, **kwargs)
 
