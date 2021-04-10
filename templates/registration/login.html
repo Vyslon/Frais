@@ -16,7 +16,7 @@
                                     {% load widget_tweaks %}
 
                                     {% for err in form.non_field_errors %}
-                                        <div class="notification is-danger is-light is-italic error-message">
+                                        <div class="notification is-size-7 is-danger is-light is-italic error-message">
                                             {{ err }}
                                         </div>
                                     {% endfor %}
@@ -24,7 +24,7 @@
                                     <!-- Champ username -->
                                     <div class="field">
                                         <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-                                        <div class="control errorable has-icons-left has-icons-right">
+                                        <div class="control has-icons-left has-icons-right">
                                             {% render_field form.username class="input" id="username" placeholder=form.username.label %}
                                             <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
                                             <span class="icon is-small is-right"><i class="delete"
@@ -35,7 +35,7 @@
                                     <!-- Champ password -->
                                     <div class="field">
                                         <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
-                                        <div class="control errorable has-icons-left has-icons-right">
+                                        <div class="control has-icons-left has-icons-right">
                                             {% render_field form.password class="input" id="password" placeholder=form.password.label %}
                                             <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
                                             <span class="icon is-small is-right"><i class="delete"
@@ -60,26 +60,6 @@
     </section>
 
     <script type="text/javascript">
-
-        const $champsAvecErreur = Array.prototype.slice.call(document.querySelectorAll('.errorable'), 0);
-
-        if ($champsAvecErreur.length > 0) {
-
-            // Add a click event on each of them
-            $champsAvecErreur.forEach(el => {
-                el.addEventListener('click', () => {
-
-                    const $errorMessages = Array.prototype.slice.call(document.querySelectorAll('.error-message'), 0);
-
-                    if ($errorMessages.length > 0) {
-                        $errorMessages.forEach(el => {
-                            el.remove();
-                        });
-                    }
-                });
-            });
-        }
-
         const $deleteBtns = Array.prototype.slice.call(document.querySelectorAll('.delete'), 0);
 
         if ($deleteBtns.length > 0) {
