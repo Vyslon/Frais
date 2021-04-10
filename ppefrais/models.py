@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from month.models import MonthField
+from django.utils.text import slugify
 
 
 class Visiteur(AbstractUser):
@@ -15,6 +16,16 @@ class Visiteur(AbstractUser):
     class Meta:
         verbose_name = 'Visiteur médical'
         verbose_name_plural = 'Visiteurs médicaux'
+
+    def save(self, *args, **kwargs):
+        # Gives a username
+        if self.username is None:
+            self.username = slugify(self.first_name[0] + self.last_name)
+        # Gives a password
+        # password is date_embauche formatted as ddmmyyyy (i.e 31121999 for December 31, 1999)
+        if self.password is None:
+            self.set_password(self.date_embauche.strftime("%d%m%Y"))
+        return super(Visiteur, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.username
