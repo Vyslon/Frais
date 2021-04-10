@@ -6,6 +6,7 @@ from .forms import LigneFraisHorsForfaitForm
 from .models import FicheFrais, Visiteur, LigneFraisForfait, LigneFraisHorsForfait
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 import datetime
+import month
 
 import os
 from django.conf import settings
@@ -85,10 +86,14 @@ def link_callback(uri, rel):
 
 def fiches_frais(request):
     usr = Visiteur.objects.get(id=request.user.id)
+    dateMinimum = month.Month(datetime.datetime.now().year - 1, 1)
 
-    dateMinimum = str(datetime.datetime.now().year - 1) + '01'
-    ficheFrais = FicheFrais.objects.filter(visiteur=usr).order_by('-mois').extra(where=['mois>=%s'],
-                                                                                params=[dateMinimum])
+    ficheFrais = FicheFrais\
+        .objects\
+        .filter(visiteur=usr)\
+        .order_by('-mois')\
+        .extra(where=['mois>=%s'], params=[str(dateMinimum)])
+
     context = {
         'fiches': ficheFrais
     }
