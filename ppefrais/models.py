@@ -56,13 +56,13 @@ class FicheFrais(models.Model):
 
     def total_frais_forfaitaires(self):
         total = 0
-        for ligne in self.lignefraisforfait_set:
+        for ligne in self.lignefraisforfait_set.all():
             total += ligne.total
         return total
 
     def total_frais_horsforfait(self):
         total = 0
-        for ligne in self.lignefraishorsforfait_set:
+        for ligne in self.lignefraishorsforfait_set.all():
             total += ligne.montant
         return total
 
