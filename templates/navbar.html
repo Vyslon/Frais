@@ -14,21 +14,20 @@
 
     <div id="navbarExampleTransparentExample" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item" href="{% url 'accueil' %}">Accueil</a>
             {% if user.is_authenticated %}
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link" href="{% url 'accueil' %}">
-                    Fiches de frais
-                </a>
-                <div class="navbar-dropdown is-boxed">
-                    <a class="navbar-item" href="{% url 'les-fiches' %}">
-                        Voir les fiches
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link" href="{% url 'les-fiches' %}">
+                        Fiches de frais
                     </a>
-                    <a class="navbar-item" href="{% url 'nouvelle-fiche-frais' %}">
-                        Nouvelle fiche
-                    </a>
+                    <div class="navbar-dropdown is-boxed">
+                        <a class="navbar-item" href="{% url 'les-fiches' %}">
+                            Voir les fiches
+                        </a>
+                        <a class="navbar-item" href="{% url 'nouvelle-fiche-frais' %}">
+                            Nouvelle fiche
+                        </a>
+                    </div>
                 </div>
-            </div>
             {% endif %}
         </div>
         <div class="navbar-end">
