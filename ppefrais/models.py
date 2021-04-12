@@ -41,21 +41,28 @@ class FicheFrais(models.Model):
     etat = models.CharField(max_length=3, choices=Etat.choices, default=Etat.ENCOURS)
     visiteur = models.ForeignKey('Visiteur', on_delete=models.RESTRICT, default=None)
     mois = MonthField(null=False, blank=False)
-    nb_justificatifs = models.PositiveIntegerField(blank=True, default=0)
-    montant_valide = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=0)
-    date_modif = models.DateField(blank=True, default=timezone.now)
+    # nb_justificatifs = models.PositiveIntegerField(blank=True, default=0)
+    # montant_valide = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=0)
+    date_modif = models.DateField(blank=True, auto_now=True)
+
+    def montant_valide(self):
+        if (self.etat == FicheFrais.Etat.REMBOURSEE) or (self.etat == FicheFrais.Etat.VALIDEE):
+            return self.total_frais_forfaitaires() + self.total_frais_horsforfait()
+        else:
+            return 0
+
+    def nb_justificatifs(self):
+        return self.lignefraishorsforfait_set.count()
 
     def total_frais_forfaitaires(self):
         total = 0
-        lignes_forfait = LigneFraisForfait.objects.filter(fiche_id=self.id)
-        for ligne in lignes_forfait:
+        for ligne in self.lignefraisforfait_set:
             total += ligne.total
         return total
 
     def total_frais_horsforfait(self):
         total = 0
-        lignes_horsforfait = LigneFraisHorsForfait.objects.filter(fiche_id=self.id)
-        for ligne in lignes_horsforfait:
+        for ligne in self.lignefraishorsforfait_set:
             total += ligne.montant
         return total
 
