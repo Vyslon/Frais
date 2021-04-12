@@ -117,5 +117,5 @@ AUTH_USER_MODEL = 'ppefrais.Visiteur'
 
 # URLs de connexion / déconnexion
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'accueil'
-LOGOUT_REDIRECT_URL = 'accueil'
+LOGIN_REDIRECT_URL = 'les-fiches'
+LOGOUT_REDIRECT_URL = 'login'
