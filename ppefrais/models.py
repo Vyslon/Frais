@@ -71,14 +71,10 @@ class FicheFrais(models.Model):
         is_new = True if not self.id else False
         super(FicheFrais, self).save(*args, **kwargs)
         if is_new:
-            lff_etape = LigneFraisForfait(fiche=self, frais_forfait=LigneFraisForfait.FraisForfait.ETAPE)
-            lff_fraiskm = LigneFraisForfait(fiche=self, frais_forfait=LigneFraisForfait.FraisForfait.FRAISKM)
-            lff_nuithotel = LigneFraisForfait(fiche=self, frais_forfait=LigneFraisForfait.FraisForfait.NUITHOTEL)
-            lff_restau = LigneFraisForfait(fiche=self, frais_forfait=LigneFraisForfait.FraisForfait.RESTAU)
-            lff_etape.save()
-            lff_fraiskm.save()
-            lff_nuithotel.save()
-            lff_restau.save()
+            LigneFraisForfait.objects.create(fiche=self, frais_forfait=LigneFraisForfait.FraisForfait.ETAPE)
+            LigneFraisForfait.objects.create(fiche=self, frais_forfait=LigneFraisForfait.FraisForfait.FRAISKM)
+            LigneFraisForfait.objects.create(fiche=self, frais_forfait=LigneFraisForfait.FraisForfait.NUITHOTEL)
+            LigneFraisForfait.objects.create(fiche=self, frais_forfait=LigneFraisForfait.FraisForfait.RESTAU)
 
     def get_absolute_url(self):
         return reverse('une-fiche', args=[(self.mois.strftime('%Y%m'))])
@@ -97,7 +93,7 @@ class AbstractLigneFrais(models.Model):
 class LigneFraisHorsForfait(AbstractLigneFrais):
     libelle = models.CharField(max_length=50, null=False, blank=False)
     date = models.DateField(null=False, blank=False)
-    montant = models.DecimalField(decimal_places=2, max_digits=10, null=False, blank=False)
+    montant = models.DecimalField(decimal_places=2, max_digits=10, blank=True, default=0)
 
     def __str__(self):
         return str(self.fiche.id) + str(self.id) + ' (H.F.)'
@@ -118,7 +114,7 @@ class LigneFraisForfait(AbstractLigneFrais):
         RESTAU = 'REP', _('Repas restaurant')
 
     frais_forfait = models.CharField(max_length=3, choices=FraisForfait.choices)
-    quantite = models.PositiveIntegerField(blank=False)
+    quantite = models.PositiveIntegerField(blank=True, default=0)
 
     @property
     def total(self):
