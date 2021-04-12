@@ -1,3 +1,5 @@
+import decimal
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
@@ -125,7 +127,7 @@ class LigneFraisForfait(AbstractLigneFrais):
 
     @property
     def total(self):
-        return self.montant_unitaire() * self.quantite
+        return decimal.Decimal(self.montant_unitaire() * self.quantite)
 
     def montant_unitaire(self):
         if self.frais_forfait == 'ETP':
