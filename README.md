@@ -63,7 +63,7 @@ Elle est destinée aux visiteurs médicaux et doit leur permettre de consulter l
 
 Une autre application sera développée dans un second temps pour permettre au personnel du service comptable de GSB de faire le suivi des états de frais des visiteurs médicaux jusqu'à leur règlement.
 
-*Pour connaître l'intégralité du contexte et le cahier des charges, consulter la* [fiche des consignes](dossier_technique/consignes_GSB_PPE_3.pdf) *du PPE 3.*  
+*Pour connaître l'intégralité du contexte et le cahier des charges, consulter la* [fiche des consignes](consignes.pdf). 
 
 
 ### 1.3. Technologies et savoir-faire mis en oeuvre
