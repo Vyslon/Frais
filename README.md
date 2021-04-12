@@ -86,27 +86,57 @@ Une autre application sera développée dans un second temps pour permettre au p
 + Un navigateur web pour naviguer sur le site
   + de préférence autre que Internet Explorer, car le framework CSS Bulma n'est pas totalement compatible
 
-### 2.2. Récupération du projet et mise en route
-Cloner le dépôt git :
+### 2.2. Installation du projet
+#### 2.2.1. Récupération du dépôt git
 ```
 git clone https://github.com/th-thomas/gsb-frais/
 ```
-Se placer dans le répertoire du projet, puis créer et activer un environnement Python virtuel :
-Sous Windows :
-```shell
-virtualenv venv
-.\venv\Scripts\activate
-```
-Sous Linux :
-```bash
-virtualenv venv
-source venv/bin/activate
-```
 
-Installation des dépendances requises :
+#### 2.2.2. Création et activation de l'environnement Python virtuel 
+Se placer dans le répertoire du projet, puis exécuter les commandes suivantes.
++ Sous Windows :
+  ```shell
+  virtualenv venv
+  .\venv\Scripts\activate
+  ```
++ Sous Linux :
+  ```bash
+  virtualenv venv
+  source venv/bin/activate
+  ```
+
+#### 2.2.3. Installation des dépendances requises
 ```bash
 python -m pip install -r requirements.txt
 ```
+
+#### 2.2.4. Création et exécution des migrations
+> Les migrations sont la manière par laquelle Django propage des modifications que vous apportez à des modèles (ajout d’un champ, suppression d’un modèle, etc.) dans un schéma de base de données.
+
+Exécuter dans cet ordre les commandes :
+```shell
+python manage.py makemigrations
+python manage.py migrate
+```
+
+##### Notes
+La commande `migrate` exécute les migrations. Cette fois-ci, elle a permis de créer la base de données (fichier SQLite `db.sqlite3`) et d'y créer les tables correspondant aux modèles.
+
+La commande `makemigrations` est responsable de la création de nouvelles migrations en fonction des modifications apportées aux modèles.
+
++ Comme le projet contient déjà le fichier de migration initial, et qu'aucune modification n'a été apportée aux modèles, cette commande n'aura aucune incidence cette fois-ci.  
+
++ **Elle devra cependant être exécutée préalablement à la commande `migrate` chaque fois qu'une modification sera apportée aux modèles (`models.py`).**
+
+#### 2.2.5. Chargement du jeu de données initial dans la base de données
+La base de données, désormais construite, est pour l'instant vide.  
+Il faut lui ajouter des données grâce à la commande :
+```
+python manage.py load_data
+```
+qui génère des données en créant un visiteur médical et en lui attribuant des fiches de frais pour l'année courante et l'année précédente.  
+
+A la fin de son exécution, **elle affiche également les identifiants nécessaires pour se connecter au site.**
 
 ### 2.3. Configuration de l'application pour la connexion à la base de données
 #### 2.3.1. Choix de SQL Server ou MySQL, utiliser ou non les procédures stockées 
