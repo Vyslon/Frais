@@ -46,13 +46,15 @@
                                         {% endwith %}
                                     </th>
                                     <th>
-                                        <a href="{% url 'une-fiche-pdf' elt.mois %}"
-                                           class="button is-small is-primary">
-                                            <span class="icon is-small">
-                                                <i class="fas fa-file-pdf"></i>
-                                            </span>
-                                            <span>PDF</span>
-                                        </a>
+                                        {% if elt.etat != elt.Etat.ENCOURS %}
+                                            <a href="{% url 'une-fiche-pdf' elt.mois %}"
+                                               class="button is-small is-primary">
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-file-pdf"></i>
+                                                </span>
+                                                <span>PDF</span>
+                                            </a>
+                                        {% endif %}
                                     </th>
                                 </tr>
                             {% endfor %}
