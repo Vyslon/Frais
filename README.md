@@ -217,7 +217,7 @@ Se référer à l'[étape 2.2.](#22-cr%C3%A9ation-et-activation-de-lenvironnemen
 #### 3.3.3. Installation des dépendances requises avec PIP
 Dans un premier temps, se référer à l'[étape 2.3.](#23-installation-des-d%C3%A9pendances-requises-avec-pip)
 
-Puis installer le serveur Gunicorn et l'adaptateur PostgreSQL en exécutant la commande :
+Puis, en se plaçant dans le répertoire du projet Django, installer le serveur Gunicorn et l'adaptateur PostgreSQL grâce à la commande :
 ```bash
 pip install -r requirements_prod.txt
 ```
