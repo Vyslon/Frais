@@ -28,9 +28,10 @@ Sup'Chassagnes - Oullins (69)
 ---
 
 ## Sommaire
-1. [Introduction](#1-introduction)  
-  1.1. [Présentation de l'application](#11-pr%C3%A9sentation-de-lapplication)  
-  1.2. [Technologies mises en oeuvre](#12-technologies-et-savoir-faire-mis-en-oeuvre)  
+1. [Introduction](#1-introduction)   
+  1.1. [Contexte](#11-contexte)  
+  1.2. [L'existant - la nouvelle application](#12-lexistant--la-nouvelle-application)  
+  1.3. [Technologies mises en oeuvre](#13-technologies-et-savoir-faire-mis-en-oeuvre)  
 2. [Utiliser l'application](#2-utiliser-lapplication)  
   2.1. [Environnement logiciel requis](#21-environnement-logiciel-requis)  
   2.2. [Installation du projet](#22-installation-du-projet)
