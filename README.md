@@ -113,7 +113,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-<u>Notes</u>
+#####Notes
 
 *La commande `migrate` exécute les migrations. Cette fois-ci, elle a permis de créer la base de données (fichier SQLite `db.sqlite3`) et d'y créer les tables correspondant aux modèles.*
 
@@ -133,7 +133,8 @@ qui génère des données en créant un visiteur médical et en lui attribuant d
 
 À la fin de son exécution, **elle affiche également les identifiants nécessaires pour se connecter au site.**
 
-<u>Note</u> : *d'une manière générale :*
+##### Note
+*D'une manière générale :*
 + *le __nom d'utilisateur__ d'un utilisateur (visiteur médical) est, en minuscules et sans accents, la chaîne de caractères formée par __la première lettre de son prénom suivie du nom.__*
 + *son __mot de passe__ par défaut est sa __date d'embauche au format jjmmaaaa.__*
 
