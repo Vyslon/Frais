@@ -11,7 +11,7 @@
     <section class="section">
         <div class="container">
             <div class="columns is-centered">
-                <div class="column" style="max-width: 720px;">
+                <div class="column is-two-thirds">
                     <div>
                         {% if ficheFrais.etat == ficheFrais.Etat.ENCOURS %}
                             <h1 class="title is-3">
@@ -38,7 +38,7 @@
                             </div>
                         {% endif %}
                         <div class="table-container">
-                            <table class="table">
+                            <table class="table is-fullwidth">
                                 <tr>
                                     <td>État</td>
                                     <td>{{ ficheFrais.get_etat_display }}</td>
@@ -64,7 +64,7 @@
                     <div class="my-3">
                         <h2 class="title is-4">Frais forfaitaires</h2>
                         <div class="table-container">
-                            <table class="table is-hoverable">
+                            <table class="table is-fullwidth is-hoverable">
                                 <thead>
                                 <tr>
                                     {% if ficheFrais.etat == ficheFrais.Etat.ENCOURS %}
@@ -127,7 +127,7 @@
                     <div class="my-3">
                         <h2 class="title is-4">Autres frais</h2>
                         <div class="table-container">
-                            <table class="table is-hoverable">
+                            <table class="table is-fullwidth is-hoverable">
                                 <thead>
                                 <tr>
                                     {% if ficheFrais.etat == ficheFrais.Etat.ENCOURS %}
