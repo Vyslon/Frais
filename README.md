@@ -113,15 +113,15 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-#####Notes
+##### Notes
 
-*La commande `migrate` exécute les migrations. Cette fois-ci, elle a permis de créer la base de données (fichier SQLite `db.sqlite3`) et d'y créer les tables correspondant aux modèles.*
+*La commande* `migrate` *exécute les migrations. Cette fois-ci, elle a permis de créer la base de données (fichier SQLite`db.sqlite3`) et d'y créer les tables correspondant aux modèles.*
 
-*La commande `makemigrations` est responsable de la création de nouvelles migrations en fonction des modifications apportées aux modèles.*
+*La commande* `makemigrations` *est responsable de la création de nouvelles migrations en fonction des modifications apportées aux modèles.*
 
 + *Comme le projet contient déjà le fichier de migration initial, et qu'aucune modification n'a été apportée aux modèles, cette commande n'aura aucune incidence cette fois-ci.*  
 
-+ *__Elle devra cependant être exécutée préalablement à la commande `migrate` chaque fois qu'une modification sera apportée aux modèles (`models.py`).__*
++ *__Elle devra cependant être exécutée préalablement à la commande* `migrate` *chaque fois qu'une modification sera apportée aux modèles (`models.py`).__*
 
 #### 2.2.5. Chargement du jeu de données initial dans la base de données
 La base de données, désormais construite, est pour l'instant vide.  
@@ -201,7 +201,7 @@ Quitter l'invite PostgreSQL en tapant :
 \q
 ```
 
-
+#### 2.3.3. 
 
 
 
