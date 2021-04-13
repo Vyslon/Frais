@@ -44,6 +44,9 @@ Sup'Chassagnes - Oullins (69)
   3.1. [Mise à jour des paquets installés et installation des paquets nécessaires](#31-mise-%C3%A0-jour-des-paquets-install%C3%A9s-et-installation-des-paquets-n%C3%A9cessaires)  
   3.2. [Création de la base de données et de l'utilisateur PostgreSQL](#32-cr%C3%A9ation-de-la-base-de-donn%C3%A9es-et-de-lutilisateur-postgresql)  
   3.3. [Configuration initiale du projet Django](#33-configuration-initiale-du-projet-django)  
+  3.4. [Création de fichiers de socket et de service systemd pour Gunicorn](#34-cr%C3%A9ation-de-fichiers-de-socket-et-de-service-systemd-pour-gunicorn)   
+  3.5. [Test d'activation du socket](#35-test-dactivation-du-socket)  
+  3.6. [Configuration de Nginx](#36-configuration-de-nginx)  
 ---
 
 ## 1. Introduction
@@ -164,7 +167,7 @@ Voici, pour rappel, les identifiants du visiteur médical créé avec la command
 ## 3. Déploiement du projet sur un serveur de production
 Exemple de procédure de déploiement sur un serveur Ubuntu 20.04 avec Nginx, Gunicorn et une base de données PostgreSQL.
 
-Nous reprenons [la démarche proposée par DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-20-04-fr).
+Nous reprenons largement [la démarche proposée par DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-20-04-fr).
 
 ### 3.1. Mise à jour des paquets installés et installation des paquets nécessaires
 ```bash
@@ -270,4 +273,66 @@ La configuration de l'application Django est terminée. On peut maintenant désa
 deactivate
 ```
 
-###
+### 3.4. Création de fichiers de socket et de service systemd pour Gunicorn
+> Le socket de Gunicorn sera créée au démarrage et écoutera les connexions. Lorsqu'une connexion est établie, systemd démarrera automatiquement le processus de Gunicorn pour gérer la connexion.
+
+Créer et ouvrir un fichier de socket de systemd pour Gunicorn avec les privilèges `sudo` :
+```bash
+sudo nano /etc/systemd/system/gunicorn.socket
+```
+
+Une fois le fichier ouvert, y créer une section `[Unit]` pour décrire la socket, une section `[Socket]` pour définir l'emplacement de la socket et une section `[Install]` pour s'assurer que la socket est créée au bon moment :
+```
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+```
+
+Enregistrer et fermer le fichier.
+
+Puis créer et ouvrir un fichier de service systemd pour Gunicorn avec des privilèges `sudo`. Le nom de fichier de service doit correspondre au nom de socket, à l'exception de l'extension :
+```
+sudo nano /etc/systemd/system/gunicorn.service
+```
+
+Une fois le fichier ouvert, lui donner le contenu suivant :
+```
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=sammy
+Group=www-data
+WorkingDirectory=/home/sammy/gsb
+ExecStart=/home/sammy/gsb/virtualenv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          gsb.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Remplacer les occurences de `sammy` par le nom de l'utilisateur courant.
+
+> Par souci de brièveté, nous n'expliquons pas ici à quoi correspondent les lignes de ce fichier `gunicorn.service`. Le tutoriel de DigitalOcean donne ces explications.
+
+Enregistrer et fermer le fichier. 
+
+Puis démarrer et activer le socket Gunicorn :
+```bash
+sudo systemctl start gunicorn.socket
+sudo systemctl enable gunicorn.socket
+```
+
+### 3.5. Test d'activation du socket
+
+### 3.6. Configuration de Nginx
