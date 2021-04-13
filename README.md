@@ -33,15 +33,7 @@ Sup'Chassagnes - Oullins (69)
   1.2. [Technologies mises en oeuvre](#12-technologies-et-savoir-faire-mis-en-oeuvre)  
 2. [Utiliser l'application](#2-utiliser-lapplication)  
   2.1. [Environnement logiciel requis](#21-environnement-logiciel-requis)  
-  2.2. [Création de la base de données et de son utilisateur](#22-cr%C3%A9ation-de-la-base-de-donn%C3%A9es-et-de-son-utilisateur)  
-  2.3. [Configuration de l'application pour la connexion à la base de données](#23-configuration-de-lapplication-pour-la-connexion-%C3%A0-la-base-de-donn%C3%A9es)   
-  2.4. [Authentification dans l'application (formulaire de connexion)](#24-authentification-dans-lapplication-formulaire-de-connexion)   
-  2.5. [Navigation entre les formulaires](#25-navigation-entre-les-formulaires)
-3. [Annexes](#3-annexes)  
-  3.1. [Migrer les données de Access vers MySQL](#31-migrer-les-donn%C3%A9es-de-access-vers-mysql)  
-  3.2. [Modèle conceptuel de données](#32-mod%C3%A8le-conceptuel-de-donn%C3%A9es)  
-  3.3. [Diagramme de classes](#33-diagramme-de-classes)  
-4. [Remerciements](#4-remerciements)  
+  2.2. [Installation du projet](#22-installation-du-projet)
 
 ---
 
@@ -138,3 +130,6 @@ qui génère des données en créant un visiteur médical et en lui attribuant d
 
 À la fin de son exécution, **elle affiche également les identifiants nécessaires pour se connecter au site.**
 
+Voici, pour rappel, ces identifiants :  
++ Nom d'utilisateur : `jdupont`
++ Mot de passe : `31121999`
