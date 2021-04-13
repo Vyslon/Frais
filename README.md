@@ -34,8 +34,8 @@ Sup'Chassagnes - Oullins (69)
   1.3. [Technologies mises en oeuvre](#13-technologies-et-savoir-faire-mis-en-oeuvre)  
 2. [Utiliser l'application](#2-utiliser-lapplication)  
   2.1. [Environnement logiciel requis](#21-environnement-logiciel-requis)  
-  2.2. [Installation du projet (sur une machine de développement)](#22-installation-du-projet)
-  2.3. [Déploiement du projet sur un serveur de production]()
+  2.2. [Installation du projet (sur une machine de développement)](#22-installation-du-projet-sur-une-machine-de-d%C3%A9veloppement)
+  2.3. [Déploiement du projet sur un serveur de production](#23-d%C3%A9ploiement-du-projet-sur-un-serveur-de-production)
 ---
 
 ## 1. Introduction
@@ -113,14 +113,15 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-##### Notes
-La commande `migrate` exécute les migrations. Cette fois-ci, elle a permis de créer la base de données (fichier SQLite `db.sqlite3`) et d'y créer les tables correspondant aux modèles.
+<u>Notes</u>
 
-La commande `makemigrations` est responsable de la création de nouvelles migrations en fonction des modifications apportées aux modèles.
+*La commande `migrate` exécute les migrations. Cette fois-ci, elle a permis de créer la base de données (fichier SQLite `db.sqlite3`) et d'y créer les tables correspondant aux modèles.*
 
-+ Comme le projet contient déjà le fichier de migration initial, et qu'aucune modification n'a été apportée aux modèles, cette commande n'aura aucune incidence cette fois-ci.  
+*La commande `makemigrations` est responsable de la création de nouvelles migrations en fonction des modifications apportées aux modèles.*
 
-+ **Elle devra cependant être exécutée préalablement à la commande `migrate` chaque fois qu'une modification sera apportée aux modèles (`models.py`).**
++ *Comme le projet contient déjà le fichier de migration initial, et qu'aucune modification n'a été apportée aux modèles, cette commande n'aura aucune incidence cette fois-ci.*  
+
++ *__Elle devra cependant être exécutée préalablement à la commande `migrate` chaque fois qu'une modification sera apportée aux modèles (`models.py`).__*
 
 #### 2.2.5. Chargement du jeu de données initial dans la base de données
 La base de données, désormais construite, est pour l'instant vide.  
@@ -132,6 +133,23 @@ qui génère des données en créant un visiteur médical et en lui attribuant d
 
 À la fin de son exécution, **elle affiche également les identifiants nécessaires pour se connecter au site.**
 
-Voici, pour rappel, ces identifiants :  
+<u>Note</u> : *d'une manière générale :*
++ *le __nom d'utilisateur__ d'un utilisateur (visiteur médical) est, en minuscules et sans accents, la chaîne de caractères formée par __la première lettre de son prénom suivie du nom.__*
++ *son __mot de passe__ par défaut est sa __date d'embauche au format jjmmaaaa.__*
+
+#### 2.2.6. Démarrage du serveur de développement
+La commande
+```shell
+python manage.py runserver
+```
+démarre le serveur de développement. Le serveur fonctionne sur le port 8000 à l'adresse 127.0.0.1.
+
+Pour accéder au site, il faut donc saisir l'adresse suivante dans le navigateur web :
+```
+http://127.0.0.1:8000/
+```
+et, sur la page de connexion qui s'affiche, saisir les identifiants qui ont été donnés auparavant.
+
+Voici, pour rappel, les identifiants du visiteur médical créé avec la commande `load_data` :  
 + Nom d'utilisateur : `jdupont`
 + Mot de passe : `31121999`
