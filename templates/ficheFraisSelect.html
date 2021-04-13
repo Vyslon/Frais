@@ -7,7 +7,17 @@
     <section class="section">
         <div class="container">
             <div class="columns is-centered">
-                <div class="column" style="max-width: 564px;">
+                <div class="column is-two-thirds">
+                    {% for message in messages %}
+                        <div class="message is-primary has-text-centered">
+                            <div class="message-body">
+                                <h2 class="subtitle">
+                                    {{ message }}
+                                </h2>
+                            </div>
+                        </div>
+                    {% endfor %}
+
                     <h1 class="title is-3">Veuillez choisir le mois de la fiche de frais à consulter...</h1>
                     <div class="my-6">
                         <a class="is-size-4" href='{% url 'nouvelle-fiche-frais' %}'>
