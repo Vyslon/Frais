@@ -45,7 +45,9 @@ Sup'Chassagnes - Oullins (69)
   3.2. [Création de la base de données et de l'utilisateur PostgreSQL](#32-cr%C3%A9ation-de-la-base-de-donn%C3%A9es-et-de-lutilisateur-postgresql)  
   3.3. [Récupération du dépôt Git](#33-r%C3%A9cup%C3%A9ration-du-d%C3%A9p%C3%B4t-git)  
   3.4. [Création et activation de l'environnement Python virtuel](#34-cr%C3%A9ation-et-activation-de-lenvironnement-python-virtuel)  
-  3.5. [Installation des dépendances requises avec PIP](#35-installation-des-d%C3%A9pendances-requises-avec-pip)
+  3.5. [Installation des dépendances requises avec PIP](#35-installation-des-d%C3%A9pendances-requises-avec-pip)  
+  3.6. [Création d'une variable d'environnement pour la production](#36-cr%C3%A9ation-dune-variable-denvironnement-pour-la-production)  
+  3.7. [Ajustement des paramètres du projet](#37-ajustement-des-param%c3%a8tres-du-projet)  
 ---
 
 ## 1. Introduction
@@ -129,7 +131,7 @@ python manage.py migrate
 >
 > + Comme le projet contient déjà le fichier de migration initial, et qu'aucune modification n'a été apportée aux modèles, cette commande n'aura aucune incidence cette fois-ci.  
 >
-> + **Elle devra cependant être exécutée préalablement à la commande `migrate` chaque fois qu'une modification sera apportée aux modèles (`models.py`).**
+> + **Elle devra cependant être exécutée préalablement à la commande `migrate` chaque fois qu'une modification sera apportée aux modèles (fichier `models.py` du répertoire `ppefrais`).**
 
 ### 2.5. Chargement du jeu de données initial dans la base de données
 La base de données, désormais construite, est pour l'instant vide.  
@@ -220,7 +222,7 @@ Dans un premier temps, se référer à l'[étape 2.3.](#23-installation-des-d%C3
 
 Puis installer le serveur Gunicorn et l'adaptateur PostgreSQL en exécutant la commande :
 ```bash
-pip install -r requirements-prod.txt
+pip install -r requirements_prod.txt
 ```
 
 ### 3.6. Création d'une variable d'environnement pour la production
@@ -230,6 +232,27 @@ export DJANGO_DEVELOPMENT=true
 ```
 au fichier `~/.bashrc` (par exemple avec l'éditeur nano, grâce à la commande `sudo nano ~/.bashrc`).
 
+Le projet Django applique par défaut les paramètres de développement, mais avec cette variable **les paramètres de production (fichier `settings_prod.py` du répertoire `gsb`) seront appliqués.** 
 
+### 3.7. Ajustement des paramètres du projet
+Se placer dans le répertoire du projet et ouvrir le fichier `settings_prod.py` (situé dans le répertoire `gsb`) :
+```
+nano gsb/settings_prod.py
+```
 
+Localiser la directive ALLOWED_HOSTS.
+
+Dans les crochets, lister les adresses IP ou les noms de domaine associés au serveur Django. Chaque élément devrait être listé dans des guillemets avec les entrées séparées par une virgule. 
+
+De plus, il convient d'inclure `localhost` parmi les options, car une instance locale de Nginx sera utilisée comme proxy pour les connexions.
+
+Exemple :
+
+```
+ALLOWED_HOSTS = ['localhost', 'monsite.fr', '201.253.135.16']
+```
+
+La section qui concerne les bases de données commence par `DATABASES`. Elle est préconfigurée pour fonctionner avec la base de données créée précédemment au point 3.2.
+
+### 3.8. 
 
