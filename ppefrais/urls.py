@@ -1,10 +1,9 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.decorators import login_required
-from django.views.generic.base import TemplateView
 
 urlpatterns = [
-    path('', login_required(TemplateView.as_view(template_name='accueil.html'), login_url='login'), name='accueil'),
+    path('login/', views.MyLoginView.as_view()),
     path('fiches-frais/', login_required(views.fiches_frais), name='les-fiches'),
     path('fiches-frais/nouvelle-fiche/', login_required(views.FicheFraisCreate.as_view()), name='nouvelle-fiche-frais'),
     path('fiches-frais/<str:mois>/saisie-frais-hors-forfait/', login_required(views.LigneFraisHorsForfaitCreate.as_view()), name='saisie-ligne-hors-forfait'),

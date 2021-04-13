@@ -1,3 +1,5 @@
+from django.contrib.auth.views import LoginView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db import IntegrityError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -14,6 +16,10 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
+
+
+class MyLoginView(SuccessMessageMixin, LoginView):
+    success_message = 'Vous êtes désormais connecté !'
 
 
 def une_fiche_frais_pdf(request, mois):
