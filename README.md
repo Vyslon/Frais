@@ -41,6 +41,9 @@ Sup'Chassagnes - Oullins (69)
   2.5. [Chargement du jeu de données initial dans la base de données](#25-chargement-du-jeu-de-donn%C3%A9es-initial-dans-la-base-de-donn%C3%A9es)  
   2.6. [Démarrage du serveur de développement](#26-d%C3%A9marrage-du-serveur-de-d%C3%A9veloppement)  
 3. [Déploiement du projet sur un serveur de production](#3-d%C3%A9ploiement-du-projet-sur-un-serveur-de-production)  
+  3.1. [Mise à jour des paquets installés et installation des paquets nécessaires](#31-mise-%C3%A0-jour-des-paquets-install%C3%A9s-et-installation-des-paquets-n%C3%A9cessaires)
+  3.2. [Création de la base de données et de l'utilisateur PostgreSQL](#32-cr%C3%A9ation-de-la-base-de-donn%C3%A9es-et-de-lutilisateur-postgresql)
+  3.3. []()
 ---
 
 ## 1. Introduction
