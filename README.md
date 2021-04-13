@@ -64,7 +64,8 @@ Une autre application sera développée dans un second temps pour permettre au p
 + Développement web avec le framework Django 
   + patron de conception MVT (Modèle - Vue - Template)
   + ORM intégré et "database agnostic"
-+ Design des pages web avec le framework CSS Bulma
++ CSS avec le framework Bulma (responsive design)
++ JavaScript
 + Génération de fichiers PDF téléchargeables et au contenu dynamique grâce à un module Python
 + Système de contrôle de version : Git
 + Livraison incrémentale du projet grâce à la méthode Scrum
