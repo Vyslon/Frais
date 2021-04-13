@@ -207,10 +207,17 @@ Quitter l'invite PostgreSQL en tapant :
 \q
 ```
 
-### 3.3.
+### 3.3. Récupération du dépôt Git
+Se référer à l'[étape 2.1.](#21-r%C3%A9cupération-du-d%C3%A9p%c3%b4t-git).
 
+### 3.4. Création et activation de l'environnement Python virtuel
+Se référer à l'[étape 2.2.](#22-cr%C3%A9ation-et-activation-de-lenvironnement-python-virtuel).
 
+### 3.5. Installation des dépendances requises avec PIP
+Dans un premier temps, se référer à l'[étape 2.3.](#23-installation-des-d%C3%A9pendances-requises-avec-pip)
 
-
-
+Puis installer le serveur Gunicorn et l'adaptateur PostgreSQL en exécutant la commande :
+```bash
+pip install -r requirements-prod.txt
+```
 
