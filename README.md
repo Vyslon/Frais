@@ -246,7 +246,7 @@ De plus, il convient d'inclure `localhost` parmi les options, car une instance l
 Exemple :
 
 ```
-ALLOWED_HOSTS = ['localhost', 'monsite.fr', '201.253.135.16']
+ALLOWED_HOSTS = ['localhost', 'exempledesite.abc', '201.253.135.16']
 ```
 
 La section qui concerne les bases de données commence par `DATABASES`. Elle est préconfigurée pour fonctionner avec la base de données créée précédemment au point 3.2.

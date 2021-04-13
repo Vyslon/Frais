@@ -10,7 +10,7 @@ SECRET_KEY = '_%$qy=(_-$5)dv-dl^b1+p$)^o3la+x2s=gwqwb-s9qpzs2w90'
 DEBUG = False
 
 # Adresses auxquelles le site est accessible
-# Exemple : ['localhost', 'monsite.fr', '201.253.135.16']
+# Exemple : ['localhost', 'exempledesite.abc', '201.253.135.16']
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Database
