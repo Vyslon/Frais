@@ -34,8 +34,8 @@ Sup'Chassagnes - Oullins (69)
   1.3. [Technologies mises en oeuvre](#13-technologies-et-savoir-faire-mis-en-oeuvre)  
 2. [Utiliser l'application](#2-utiliser-lapplication)  
   2.1. [Environnement logiciel requis](#21-environnement-logiciel-requis)  
-  2.2. [Installation du projet](#22-installation-du-projet)
-
+  2.2. [Installation du projet (sur une machine de développement)](#22-installation-du-projet)
+  2.3. [Déploiement du projet sur un serveur de production]()
 ---
 
 ## 1. Introduction
@@ -80,7 +80,7 @@ Une autre application sera développée dans un second temps pour permettre au p
 + Un navigateur web pour naviguer sur le site
   + de préférence autre que Internet Explorer, car le framework CSS Bulma n'est pas totalement compatible
 
-### 2.2. Installation du projet
+### 2.2. Installation du projet (sur une machine de développement)
 #### 2.2.1. Récupération du dépôt git
 ```
 git clone https://github.com/th-thomas/gsb-frais/
