@@ -23,7 +23,7 @@
 
                                     <!-- Champ username -->
                                     <div class="field">
-                                        <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                                        <label class="label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
                                         <div class="control has-icons-left has-icons-right">
                                             {% render_field form.username class="input" id="username" placeholder=form.username.label %}
                                             <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
@@ -34,7 +34,7 @@
 
                                     <!-- Champ password -->
                                     <div class="field">
-                                        <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                                        <label class="label" for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
                                         <div class="control has-icons-left has-icons-right">
                                             {% render_field form.password class="input" id="password" placeholder=form.password.label %}
                                             <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
@@ -46,7 +46,7 @@
                                     <!-- Bouton de connexion -->
                                     <div class="field mt-5">
                                         <div class="control">
-                                            <button type="submit" class="button is-primary">Connexion</button>
+                                            <button type="submit" class="button is-primary is-fullwidth">Connexion</button>
                                         </div>
                                     </div>
 
