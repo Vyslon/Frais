@@ -228,7 +228,7 @@ Ajouter la ligne
 ```
 export DJANGO_DEVELOPMENT=true
 ```
-au fichier ~/.bashrc (par exemple avec l'éditeur nano, grâce à la commande `sudo nano ~/.bashrc`).
+au fichier `~/.bashrc` (par exemple avec l'éditeur nano, grâce à la commande `sudo nano ~/.bashrc`).
 
 
 
