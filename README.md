@@ -139,11 +139,11 @@ qui génère des données en créant un visiteur médical et en lui attribuant d
 + *son __mot de passe__ par défaut est sa __date d'embauche au format jjmmaaaa.__*
 
 #### 2.2.6. Démarrage du serveur de développement
-La commande
+Saisir la commande
 ```shell
 python manage.py runserver
 ```
-démarre le serveur de développement. Le serveur fonctionne sur le port 8000 à l'adresse 127.0.0.1.
+afin de démarrer le serveur de développement. Le serveur fonctionne sur le port 8000 à l'adresse 127.0.0.1.
 
 Pour accéder au site, il faut donc saisir l'adresse suivante dans le navigateur web :
 ```
@@ -167,6 +167,41 @@ sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib
 ```
 
 #### 2.3.2. Création de la base de données et de l'utilisateur PostgreSQL
+Se connecter à une session interactive de Postgres en tapant :
+```bash
+sudo -u postgres psql
+```
+
+Un invite de commandes Postgres s'ouvre alors (`postgres=#` s'affiche à l'écran).
+
+Dans cet invite, créer la base de données à l'aide de la commande :
+```sql
+CREATE DATABASE gsbdb;
+```
+
+Puis créer l'utilisateur qui sera utilisé par l'application Django :
+```sql
+CREATE USER gsbuser IDENTIFIED WITH PASSWORD 'gsbpwd';
+```
+
+Exécuter ensuite les commandes suivantes, [recommandées par la documentation Django](https://docs.djangoproject.com/en/3.0/ref/databases/#optimizing-postgresql-s-configuration) elle-même :
+```sql
+ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
+ALTER ROLE myprojectuser SET timezone TO 'UTC';
+```
+
+Enfin, il faut donner au nouvel utilisateur créé un accès pour administrer la nouvelle base de données :
+```sql
+GRANT ALL PRIVILEGES ON DATABASE gsbdb TO gsbuser;
+```
+
+Quitter l'invite PostgreSQL en tapant :
+```
+\q
+```
+
+
 
 
 
