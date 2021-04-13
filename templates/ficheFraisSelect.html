@@ -4,12 +4,28 @@
 
 {% block content %}
 
+    <script type="application/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.message .delete') || []).forEach(($delete) => {
+                const $notification = $delete.parentNode.parentNode;
+
+                $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                });
+            });
+        });
+    </script>
+
     <section class="section">
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-two-thirds">
                     {% for message in messages %}
-                        <div class="message is-primary has-text-centered">
+                        <div class="message is-primary mb-6">
+                            <div class="message-header">
+                                <p>Bienvenue</p>
+                                <button class="delete"></button>
+                            </div>
                             <div class="message-body">
                                 <h2 class="subtitle">
                                     {{ message }}
@@ -30,7 +46,7 @@
                             <thead>
                             <tr>
                                 <th>Mois</th>
-                                <th>Etat</th>
+                                <th>État</th>
                                 <th></th>
                             </tr>
                             </thead>
