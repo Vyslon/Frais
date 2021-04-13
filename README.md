@@ -154,3 +154,22 @@ et, sur la page de connexion qui s'affiche, saisir les identifiants qui ont ét�
 Voici, pour rappel, les identifiants du visiteur médical créé avec la commande `load_data` :  
 + Nom d'utilisateur : `jdupont`
 + Mot de passe : `31121999`
+
+### 2.3. Déploiement du projet sur un serveur de production
+Exemple de procédure de déploiement sur un serveur Ubuntu 20.04 avec Nginx, Gunicorn et une base de données PostgreSQL.
+
+Nous reprenons [la démarche proposée par DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-20-04-fr).
+
+#### 2.3.1. Mise à jour des paquets installés et installation des paquets nécessaires
+```bash
+sudo apt update
+sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx curl
+```
+
+#### 2.3.2. Création de la base de données et de l'utilisateur PostgreSQL
+
+
+
+
+
+
