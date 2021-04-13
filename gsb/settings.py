@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -119,3 +120,9 @@ AUTH_USER_MODEL = 'ppefrais.Visiteur'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'les-fiches'
 LOGOUT_REDIRECT_URL = 'login'
+
+# Si la variable d'environnement DJANGO_PRODUCTION existe
+# (cela doit impérativement être le cas sur le serveur de production),
+# alors on utilise les paramètres du fichier settings_prod.py
+if os.environ.get('DJANGO_PRODUCTION'):
+    from settings_prod import *
