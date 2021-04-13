@@ -194,3 +194,10 @@ class FicheFraisCreate(CreateView):
         except IntegrityError:
             form.add_error(None, 'Vous avez déjà créé une fiche pour ce mois.')
             return self.form_invalid(form)
+
+    def get_initial(self):
+        initial = super(FicheFraisCreate, self).get_initial()
+        now = datetime.datetime.now()
+        initial['mois'] = month.Month(now.year, now.month)
+        return initial
+
