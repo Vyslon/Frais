@@ -43,11 +43,7 @@ Sup'Chassagnes - Oullins (69)
 3. [Déploiement du projet sur un serveur de production](#3-d%C3%A9ploiement-du-projet-sur-un-serveur-de-production)  
   3.1. [Mise à jour des paquets installés et installation des paquets nécessaires](#31-mise-%C3%A0-jour-des-paquets-install%C3%A9s-et-installation-des-paquets-n%C3%A9cessaires)  
   3.2. [Création de la base de données et de l'utilisateur PostgreSQL](#32-cr%C3%A9ation-de-la-base-de-donn%C3%A9es-et-de-lutilisateur-postgresql)  
-  3.3. [Récupération du dépôt Git](#33-r%C3%A9cup%C3%A9ration-du-d%C3%A9p%C3%B4t-git)  
-  3.4. [Création et activation de l'environnement Python virtuel](#34-cr%C3%A9ation-et-activation-de-lenvironnement-python-virtuel)  
-  3.5. [Installation des dépendances requises avec PIP](#35-installation-des-d%C3%A9pendances-requises-avec-pip)  
-  3.6. [Création d'une variable d'environnement pour la production](#36-cr%C3%A9ation-dune-variable-denvironnement-pour-la-production)  
-  3.7. [Ajustement des paramètres du projet](#37-ajustement-des-param%c3%a8tres-du-projet)  
+  3.3. [Configuration initiale du projet Django](#33-configuration-initiale-du-projet-django)  
 ---
 
 ## 1. Introduction
@@ -211,13 +207,14 @@ Quitter l'invite PostgreSQL en tapant :
 \q
 ```
 
-### 3.3. Récupération du dépôt Git
+### 3.3. Configuration initiale du projet Django
+#### 3.3.1. Récupération du dépôt Git
 Se référer à l'[étape 2.1.](#21-r%C3%A9cupération-du-d%C3%A9p%c3%b4t-git).
 
-### 3.4. Création et activation de l'environnement Python virtuel
+#### 3.3.2. Création et activation de l'environnement Python virtuel
 Se référer à l'[étape 2.2.](#22-cr%C3%A9ation-et-activation-de-lenvironnement-python-virtuel).
 
-### 3.5. Installation des dépendances requises avec PIP
+#### 3.3.3. Installation des dépendances requises avec PIP
 Dans un premier temps, se référer à l'[étape 2.3.](#23-installation-des-d%C3%A9pendances-requises-avec-pip)
 
 Puis installer le serveur Gunicorn et l'adaptateur PostgreSQL en exécutant la commande :
@@ -225,7 +222,7 @@ Puis installer le serveur Gunicorn et l'adaptateur PostgreSQL en exécutant la c
 pip install -r requirements_prod.txt
 ```
 
-### 3.6. Création d'une variable d'environnement pour la production
+#### 3.3.4. Création d'une variable d'environnement pour la production
 Ajouter la ligne 
 ```
 export DJANGO_DEVELOPMENT=true
@@ -234,7 +231,7 @@ au fichier `~/.bashrc` (par exemple avec l'éditeur nano, grâce à la commande 
 
 Le projet Django applique par défaut les paramètres de développement, mais avec cette variable **les paramètres de production (fichier `settings_prod.py` du répertoire `gsb`) seront appliqués.** 
 
-### 3.7. Ajustement des paramètres du projet
+#### 3.3.5. Ajustement des paramètres du projet
 Se placer dans le répertoire du projet et ouvrir le fichier `settings_prod.py` (situé dans le répertoire `gsb`) :
 ```
 nano gsb/settings_prod.py
@@ -254,5 +251,23 @@ ALLOWED_HOSTS = ['localhost', 'monsite.fr', '201.253.135.16']
 
 La section qui concerne les bases de données commence par `DATABASES`. Elle est préconfigurée pour fonctionner avec la base de données créée précédemment au point 3.2.
 
-### 3.8. 
+Enfin, deux lignes concernent les fichiers statiques (fichiers CSS, JavaScript, logo...). `STATIC_URL` définit l'URL qui rend accessibles les fichiers statiques, `STATIC_ROOT` indique à Django dans quel répertoire placer les fichiers statiques pour que Nginx puisse ensuite traiter les requêtes les concernant (cf. point suivant).
 
+Nous avons choisi de définir l'URL à `/static/` et le répertoire à `staticfiles`.
+
+#### 3.3.6. Terminer la configuration initiale du projet
+Dans un premier temps, appliquer les étapes [2.4.](#24-cr%C3%A9ation-et-ex%C3%A9cution-des-migrations) et [2.5.](#25-chargement-du-jeu-de-donn%C3%A9es-initial-dans-la-base-de-donn%C3%A9es).
+
+Puis se placer dans le répertoire du projet Django et exécuter la commande :
+```bash
+python manage.py collectstatic
+```
+
+Les fichiers statiques sont placés dans le répertoire `staticfiles`, situé à la racine du projet.
+
+La configuration de l'application Django est terminée. On peut maintenant désactiver l'environnement virtuel :
+```bash
+deactivate
+```
+
+###

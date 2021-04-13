@@ -25,3 +25,9 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+STATIC_URL = '/static/'
+# Django placera les fichiers statiques dans ce répertoire
+# afin que Nginx puisse traiter les requêtes pour ces éléments
+STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
+
