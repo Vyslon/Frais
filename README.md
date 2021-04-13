@@ -223,3 +223,13 @@ Puis installer le serveur Gunicorn et l'adaptateur PostgreSQL en exécutant la c
 pip install -r requirements-prod.txt
 ```
 
+### 3.6. Création d'une variable d'environnement pour la production
+Ajouter la ligne 
+```
+export DJANGO_DEVELOPMENT=true
+```
+au fichier ~/.bashrc (par exemple avec l'éditeur nano, grâce à la commande `sudo nano ~/.bashrc`).
+
+
+
+
