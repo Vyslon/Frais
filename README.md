@@ -34,7 +34,7 @@ Sup'Chassagnes - Oullins (69)
   1.3. [Technologies mises en oeuvre](#13-technologies-et-savoir-faire-mis-en-oeuvre)  
 2. [Utiliser l'application](#2-utiliser-lapplication)  
   2.1. [Environnement logiciel requis](#21-environnement-logiciel-requis)  
-  2.2. [Installation du projet (sur une machine de développement)](#22-installation-du-projet-sur-une-machine-de-d%C3%A9veloppement)
+  2.2. [Installation du projet (sur une machine de développement)](#22-installation-du-projet-sur-une-machine-de-d%C3%A9veloppement)  
   2.3. [Déploiement du projet sur un serveur de production](#23-d%C3%A9ploiement-du-projet-sur-un-serveur-de-production)
 ---
 
@@ -56,7 +56,7 @@ Elle est destinée aux visiteurs médicaux et doit leur permettre de consulter l
 
 Une autre application sera développée dans un second temps pour permettre au personnel du service comptable de GSB de faire le suivi des états de frais des visiteurs médicaux jusqu'à leur règlement.
 
-*Pour connaître l'intégralité du contexte et le cahier des charges, consulter la* [fiche des consignes](consignes.pdf). 
+*Pour connaître l'intégralité du contexte et le cahier des charges, consulter la* [fiche des consignes](dossier_technique/consignes.pdf). 
 
 
 ### 1.3. Technologies et savoir-faire mis en oeuvre
