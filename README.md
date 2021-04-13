@@ -43,7 +43,9 @@ Sup'Chassagnes - Oullins (69)
 3. [Déploiement du projet sur un serveur de production](#3-d%C3%A9ploiement-du-projet-sur-un-serveur-de-production)  
   3.1. [Mise à jour des paquets installés et installation des paquets nécessaires](#31-mise-%C3%A0-jour-des-paquets-install%C3%A9s-et-installation-des-paquets-n%C3%A9cessaires)  
   3.2. [Création de la base de données et de l'utilisateur PostgreSQL](#32-cr%C3%A9ation-de-la-base-de-donn%C3%A9es-et-de-lutilisateur-postgresql)  
-  3.3. []()  
+  3.3. [Récupération du dépôt Git](#33-r%C3%A9cup%C3%A9ration-du-d%C3%A9p%C3%B4t-git)  
+  3.4. [Création et activation de l'environnement Python virtuel](#34-cr%C3%A9ation-et-activation-de-lenvironnement-python-virtuel)  
+  3.5. [Installation des dépendances requises avec PIP](#35-installation-des-d%C3%A9pendances-requises-avec-pip)
 ---
 
 ## 1. Introduction
