@@ -140,4 +140,4 @@ dmypy.json
 cython_debug/
 
 /staticfiles/
-/staticfiles/
+/.idea/
