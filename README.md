@@ -47,6 +47,8 @@ Sup'Chassagnes - Oullins (69)
   3.4. [Création de fichiers de socket et de service systemd pour Gunicorn](#34-cr%C3%A9ation-de-fichiers-de-socket-et-de-service-systemd-pour-gunicorn)   
   3.5. [Configuration de Nginx](#35-configuration-de-nginx)  
   3.6. [Sécurisation de Nginx avec Let's Encrypt](#36-s%C3%A9curisation-de-nginx-avec-lets-encrypt)  
+4. [Annexes](#4-annexes)  
+  4.1. [Diagramme UML](#41-diagramme-uml)  
 ---
 
 ## 1. Introduction
@@ -386,3 +388,11 @@ Nous ne détaillons pas ici la procédure, car elle est optionnelle
 (le PPE n'a pas nécessairement vocation à être sécurisé).
 
 Néanmoins, il peut être intéressant de réaliser cette étape, c'est pourquoi nous donnons le lien vers [le très bon tutoriel de DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04).
+
+## 4. Annexes
+### 4.1. Diagramme UML
+![Diagramme UML](dossier_technique/ppefrais_uml.png)
+
+Le diagramme UML est celui produit par DataGrip à partir de la structure de la base de données SQLite du projet.
+
+Il ne contenait pas les cardinalités, qui ont été ajoutées manuellement par la suite.
