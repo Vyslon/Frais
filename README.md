@@ -45,8 +45,8 @@ Sup'Chassagnes - Oullins (69)
   3.2. [Création de la base de données et de l'utilisateur PostgreSQL](#32-cr%C3%A9ation-de-la-base-de-donn%C3%A9es-et-de-lutilisateur-postgresql)  
   3.3. [Configuration initiale du projet Django](#33-configuration-initiale-du-projet-django)  
   3.4. [Création de fichiers de socket et de service systemd pour Gunicorn](#34-cr%C3%A9ation-de-fichiers-de-socket-et-de-service-systemd-pour-gunicorn)   
-  3.5. [Test d'activation du socket](#35-test-dactivation-du-socket)  
-  3.6. [Configuration de Nginx](#36-configuration-de-nginx)  
+  3.5. [Configuration de Nginx](#35-configuration-de-nginx)  
+  3.6. [Sécurisation de Nginx avec Let's Encrypt](#36-s%C3%A9curisation-de-nginx-avec-lets-encrypt)  
 ---
 
 ## 1. Introduction
@@ -249,7 +249,7 @@ De plus, il convient d'inclure `localhost` parmi les options, car une instance l
 Exemple :
 
 ```
-ALLOWED_HOSTS = ['localhost', 'exempledesite.abc', '201.253.135.16']
+ALLOWED_HOSTS = ['localhost', 'exempledesite.abc', '123.456.123.789']
 ```
 
 La section qui concerne les bases de données commence par `DATABASES`. Elle est préconfigurée pour fonctionner avec la base de données créée précédemment au point 3.2.
@@ -333,6 +333,56 @@ sudo systemctl start gunicorn.socket
 sudo systemctl enable gunicorn.socket
 ```
 
-### 3.5. Test d'activation du socket
+### 3.5. Configuration de Nginx
+Créer un bloc serveur (VirtualHost Nginx) à l'aide de la commande :
+```bash
+sudo nano /etc/nginx/sites-available/gsb
+```
 
-### 3.6. Configuration de Nginx
+Une fois le fichier ouvert, insérer le contenu suivant :
+```
+server {
+    listen 80;
+    server_name exempledesite.abc 123.456.123.789;
+
+    location /static/ {
+        alias /home/sammy/gsb/staticfiles/;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}
+```
+La ligne commençant par `server_name` doit contenir les noms de domaine ou adresses IP auxquels le site est accessible.  
+
+La section commençant par `location /static/` indique à Nginx le répertoire où trouver les fichiers statiques, liés à l'URI `/static/` : dans notre cas, le projet Django a déployé les fichiers dans le répertoire `/home/sammy/gsb/staticfiles/`.
+
+Enregistrer et fermer le fichier. Nous pouvons maintenant activer le fichier en le reliant au répertoire `sites-enabled` :
+```bash
+sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled
+```
+
+Tester la configuration Nginx pour détecter les erreurs de syntaxe en tapant :
+```bash
+sudo nginx -t
+```
+
+Si aucune erreur n'est signalée, redémarrer Nginx avec la commande :
+```bash
+sudo systemctl restart nginx
+```
+
+Enfin, il faut ouvrir le pare-feu au trafic normal sur le port 80 :
+```bash
+sudo ufw allow 'Nginx Full'
+```
+
+### 3.6. Sécurisation de Nginx avec Let's Encrypt
+Pour activer le chiffrement HTTPS du site, il est possible de configurer un certificat TLS/SSL avec Let's Encrypt.
+
+Nous ne détaillons pas ici la procédure, car elle est optionnelle
+(le PPE n'a pas nécessairement vocation à être sécurisé).
+
+Néanmoins, il peut être intéressant de réaliser cette étape, c'est pourquoi nous donnons le lien vers [le très bon tutoriel de DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04).
