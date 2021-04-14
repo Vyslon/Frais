@@ -391,7 +391,7 @@ Néanmoins, il peut être intéressant de réaliser cette étape, c'est pourquoi
 
 ## 4. Annexes
 ### 4.1. Diagramme UML
-![Diagramme UML](dossier_technique/ppefrais_uml.png?)
+![Diagramme UML](dossier_technique/ppefrais_uml.png)
 
 Le diagramme UML est celui produit par DataGrip à partir de la structure de la base de données SQLite du projet.
 
