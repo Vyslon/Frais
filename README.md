@@ -49,6 +49,7 @@ Sup'Chassagnes - Oullins (69)
   3.6. [Sécurisation de Nginx avec Let's Encrypt](#36-s%C3%A9curisation-de-nginx-avec-lets-encrypt)  
 4. [Annexes](#4-annexes)  
   4.1. [Diagramme UML](#41-diagramme-uml)  
+  4.2. [Captures d'écran](#42-captures-d%C3%A9cran)   
 ---
 
 ## 1. Introduction
