@@ -396,3 +396,5 @@ Néanmoins, il peut être intéressant de réaliser cette étape, c'est pourquoi
 Le diagramme UML est celui produit par DataGrip à partir de la structure de la base de données SQLite du projet.
 
 Il ne contenait pas les cardinalités, qui ont été ajoutées manuellement par la suite.
+
+À noter que le modèle Visiteur hérite du modèle AbstractUser proposé par Django. D'où les champs `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active` et `date_joined`. 
