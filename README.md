@@ -397,4 +397,20 @@ Le diagramme UML est celui produit par DataGrip à partir de la structure de la 
 
 Il ne contenait pas les cardinalités, qui ont été ajoutées manuellement par la suite.
 
-À noter que le modèle Visiteur hérite du modèle AbstractUser proposé par Django. D'où les champs `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active` et `date_joined`. 
+À noter que le modèle Visiteur hérite du modèle AbstractUser proposé par Django.
+D'où les champs `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active` et `date_joined`.
+
+### 4.2. Captures d'écran
+Quelques captures d'écran pour donner un aperçu du site :
+
+| Page de connexion | Accueil |
+| ----------------- | ------- |
+|![Connexion](dossier_technique/captures/connexion.png)| ![Accueil](dossier_technique/captures/accueil.png)|
+
+| Fiche mois courant | Exemple fiche clôturée |
+| ------------------ | ---------------------- |
+|![Fiche mois courant](dossier_technique/captures/fiche_mois_courant.png)|![Exemple fiche clôturée](dossier_technique/captures/exemple_fiche_cloturee.png)
+
+| Proposition de rendu PDF d'une fiche (consignes) | Résultat produit par l'application |
+| ------------------------------------------------ | ---------------------------------- |
+|![Proposition de rendu PDF d'une fiche (consignes)](dossier_technique/captures/pdf_etat_frais_exemple.png)|![Résultat produit par l'application](dossier_technique/captures/pdf_resultat_fiche_cloturee.png)|
