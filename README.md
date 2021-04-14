@@ -197,9 +197,9 @@ CREATE USER gsbuser IDENTIFIED WITH PASSWORD 'gsbpwd';
 
 Exécuter ensuite les commandes suivantes, [recommandées par la documentation Django](https://docs.djangoproject.com/en/3.0/ref/databases/#optimizing-postgresql-s-configuration) elle-même :
 ```sql
-ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
-ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
-ALTER ROLE myprojectuser SET timezone TO 'UTC';
+ALTER ROLE gsbuser SET client_encoding TO 'utf8';
+ALTER ROLE gsbuser SET default_transaction_isolation TO 'read committed';
+ALTER ROLE gsbuser SET timezone TO 'UTC';
 ```
 
 Enfin, il faut donner au nouvel utilisateur créé un accès pour administrer la nouvelle base de données :
@@ -363,7 +363,7 @@ La section commençant par `location /static/` indique à Nginx le répertoire o
 
 Enregistrer et fermer le fichier. Nous pouvons maintenant activer le fichier en le reliant au répertoire `sites-enabled` :
 ```bash
-sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/gsb /etc/nginx/sites-enabled
 ```
 
 Tester la configuration Nginx pour détecter les erreurs de syntaxe en tapant :
