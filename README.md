@@ -41,12 +41,14 @@ Sup'Chassagnes - Oullins (69)
   2.5. [Chargement du jeu de données initial dans la base de données](#25-chargement-du-jeu-de-donn%C3%A9es-initial-dans-la-base-de-donn%C3%A9es)  
   2.6. [Démarrage du serveur de développement](#26-d%C3%A9marrage-du-serveur-de-d%C3%A9veloppement)  
 3. [Déploiement du projet sur un serveur de production](#3-d%C3%A9ploiement-du-projet-sur-un-serveur-de-production)  
-  3.1. [Mise à jour des paquets installés et installation des paquets nécessaires](#31-mise-%C3%A0-jour-des-paquets-install%C3%A9s-et-installation-des-paquets-n%C3%A9cessaires)  
-  3.2. [Création de la base de données et de l'utilisateur PostgreSQL](#32-cr%C3%A9ation-de-la-base-de-donn%C3%A9es-et-de-lutilisateur-postgresql)  
-  3.3. [Configuration initiale du projet Django](#33-configuration-initiale-du-projet-django)  
-  3.4. [Création de fichiers de socket et de service systemd pour Gunicorn](#34-cr%C3%A9ation-de-fichiers-de-socket-et-de-service-systemd-pour-gunicorn)   
-  3.5. [Configuration de Nginx](#35-configuration-de-nginx)  
-  3.6. [Sécurisation de Nginx avec Let's Encrypt](#36-s%C3%A9curisation-de-nginx-avec-lets-encrypt)  
+  3.1. [Mise à jour et installation des paquets](#31-mise-%C3%A0-jour-et-installation-des-paquets)  
+  3.2. [Configuration initiale du projet Django](#32-configuration-initiale-du-projet-django)    
+  3.3. [Création des variables d'environnement pour la production](#33-cr%C3%A9ation-des-variables-denvironnement)  
+  3.4. [Configuration de la base de données PostgreSQL](#34-configuration-de-la-base-de-donn%C3%A9es-PostgreSQL)  
+  3.5. [Terminer la configuration du projet Django](#35-terminer-la-configuration-du-projet-django)     
+  3.6. [Création de fichiers de socket et de service systemd pour Gunicorn](#34-cr%C3%A9ation-de-fichiers-de-socket-et-de-service-systemd-pour-gunicorn)   
+  3.7. [Configuration de Nginx](#35-configuration-de-nginx)  
+  3.8. [Sécurisation de Nginx avec Let's Encrypt](#36-s%C3%A9curisation-de-nginx-avec-lets-encrypt)  
 4. [Annexes](#4-annexes)  
   4.1. [Diagramme UML](#41-diagramme-uml)  
   4.2. [Captures d'écran](#42-captures-d%C3%A9cran)   
@@ -145,10 +147,9 @@ qui génère des données en créant un visiteur médical et en lui attribuant d
 
 À la fin de son exécution, **elle affiche également les identifiants nécessaires pour se connecter au site.**
 
-#### Note
-*D'une manière générale :*
-+ *le __nom d'utilisateur__ d'un utilisateur (visiteur médical) est, en minuscules et sans accents, la chaîne de caractères formée par __la première lettre de son prénom suivie du nom.__*
-+ *son __mot de passe__ par défaut est sa __date d'embauche au format jjmmaaaa.__*
+>D'une manière générale :
+>+ le **nom d'utilisateur** d'un utilisateur (visiteur médical) est, en minuscules et sans accents, la chaîne de caractères formée par **la première lettre de son prénom suivie du nom.**
+>+ son **mot de passe** par défaut est sa **date d'embauche au format jjmmaaaa.**
 
 ### 2.6. Démarrage du serveur de développement
 Saisir la commande
@@ -172,13 +173,81 @@ Exemple de procédure de déploiement sur un serveur Ubuntu 20.04 avec Nginx, Gu
 
 Nous reprenons largement [la démarche proposée par DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-20-04-fr).
 
-### 3.1. Mise à jour des paquets installés et installation des paquets nécessaires
+### 3.1. Mise à jour et installation des paquets
 ```bash
 sudo apt update
-sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx curl
+sudo apt install python3-pip python3-dev libpq-dev PostgreSQL PostgreSQL-contrib nginx curl
 ```
 
-### 3.2. Création de la base de données et de l'utilisateur PostgreSQL
+### 3.2. Configuration initiale du projet Django
+#### 3.2.1. Récupération du dépôt Git
+Se référer à l'[étape 2.1](#21-r%C3%A9cupération-du-d%C3%A9p%c3%b4t-git).  
+
+#### 3.2.2. Création et activation de l'environnement Python virtuel
+Se référer à l'[étape 2.2](#22-cr%C3%A9ation-et-activation-de-lenvironnement-python-virtuel).  
+
+#### 3.2.3. Installation des dépendances requises avec PIP
+Dans un premier temps, se référer à l'[étape 2.3](#23-installation-des-d%C3%A9pendances-requises-avec-pip).  
+
+Puis, en se plaçant dans le répertoire du projet Django, installer le serveur Gunicorn et l'adaptateur PostgreSQL grâce à la commande :
+```bash
+pip install -r requirements_prod.txt
+```
+
+#### 3.2.4. Ajustement des paramètres du projet
+Se placer dans le répertoire du projet et ouvrir le fichier `settings_prod.py` (situé dans le répertoire `gsb`) :
+```
+nano gsb/settings_prod.py
+```
+
+Localiser la directive `ALLOWED_HOSTS`.
+
+Dans les crochets, lister les adresses IP ou les noms de domaine associés au serveur Django. Chaque élément devrait être listé dans des guillemets avec les entrées séparées par une virgule. 
+
+De plus, il convient d'inclure `localhost` parmi les options, car une instance locale de Nginx sera utilisée comme proxy pour les connexions.
+
+Exemple :
+
+```
+ALLOWED_HOSTS = ['localhost', 'exempledesite.abc', '123.456.123.789']
+```
+
+> La clé secrète (`SECRET_KEY`) ainsi que les identifiants de l'utilisateur de la base de données (`USER` et `PASSWORD` de la section `DATABASES`) sont configurés pour récupérer leur valeur depuis les variables d'environnement. En effet, ces valeurs sont confidentielles et ne doivent pas être stockées dans le dépôt Git.
+> 
+> Nous définirons les variables d'environnement dans le point suivant.
+
+Enfin, deux lignes concernent les fichiers statiques (fichiers CSS, JavaScript, logo...). `STATIC_URL` définit l'URL qui rend accessibles les fichiers statiques, `STATIC_ROOT` indique à Django dans quel répertoire placer les fichiers statiques pour que Nginx puisse ensuite traiter les requêtes les concernant (cf. point suivant).
+
+Nous avons choisi de définir l'URL à `/static/` et le répertoire à `staticfiles`.
+
+### 3.3. Création des variables d'environnement
+Le projet Django doit être configuré différemment selon qu'il est utilisé en phase de développement ou de production.
+
+Nous allons donc spécifier les variables propres à l'environnement de production.
+
+> Tout d'abord, la [clé secrète de Django](https://docs.djangoproject.com/fr/3.2/ref/settings/#secret-key) doit rester confidentielle et ne doit pas apparaître dans les paramètres du fichier `settings_prod.py` du dépôt Git. Pour cela, nous la générons  depuis le serveur de production et demandons à Django de la chercher dans les variables d'environnement.
+
+Il faut donc générer la clé secrète de Django pour la production. Pour cela, saisir dans le terminal la commande :
+```bash
+python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+```
+
+La clé ainsi générée (par exemple `cnp-j0%wd_zab+l=d+v7&rw3p7h!tyu4tzzpz=ypm^$(-8+^t^`) s'affiche alors. La copier.
+
+Ouvrir le fichier `~/.bashrc` (par exemple avec l'éditeur nano, grâce à la commande `sudo nano ~/.bashrc`) et lui ajouter les lignes suivantes :
+```
+export DJANGO_PRODUCTION = true
+export DJANGO_SECRET_KEY = 'cnp-j0%wd_zab+l=d+v7&rw3p7h!tyu4tzzpz=ypm^$(-8+^t^'
+export DJANGO_DB_USER = 'nom_d_utilisateur'
+export DJANGO_DB_PASSWORD = 'mot_de_passe'
+```
+Remplacer évidemment l'exemple de clé secrète par celle qui a été générée, et `nom_d_utilisateur` et `mot_de_passe` par un nom d'utilisateur et un mot de passe de votre choix.
+
+Grâce à la 1e variable créée (`DJANGO_PRODUCTION`), **le projet Django applique désormais les paramètres de production** (fichier `settings_prod.py` du répertoire `gsb`).
+
+### 3.4. Configuration de la base de données PostgreSQL
+> Durant toute cette étape, remplacer `nom_d_utilisateur` et `mot_de_passe` par les identifiants adhoc.
+
 Se connecter à une session interactive de Postgres en tapant :
 ```bash
 sudo -u postgres psql
@@ -193,19 +262,19 @@ CREATE DATABASE gsbdb;
 
 Puis créer l'utilisateur qui sera utilisé par l'application Django :
 ```sql
-CREATE USER gsbuser IDENTIFIED WITH PASSWORD 'gsbpwd';
+CREATE USER nom_d_utilisateur IDENTIFIED WITH PASSWORD 'mot_de_passe';
 ```
 
-Exécuter ensuite les commandes suivantes, [recommandées par la documentation Django](https://docs.djangoproject.com/en/3.0/ref/databases/#optimizing-postgresql-s-configuration) elle-même :
+Exécuter ensuite les commandes suivantes, [recommandées par la documentation Django](https://docs.djangoproject.com/en/3.0/ref/databases/#optimizing-PostgreSQL-s-configuration) elle-même :
 ```sql
-ALTER ROLE gsbuser SET client_encoding TO 'utf8';
-ALTER ROLE gsbuser SET default_transaction_isolation TO 'read committed';
-ALTER ROLE gsbuser SET timezone TO 'UTC';
+ALTER ROLE nom_d_utilisateur SET client_encoding TO 'utf8';
+ALTER ROLE nom_d_utilisateur SET default_transaction_isolation TO 'read committed';
+ALTER ROLE nom_d_utilisateur SET timezone TO 'UTC';
 ```
 
 Enfin, il faut donner au nouvel utilisateur créé un accès pour administrer la nouvelle base de données :
 ```sql
-GRANT ALL PRIVILEGES ON DATABASE gsbdb TO gsbuser;
+GRANT ALL PRIVILEGES ON DATABASE gsbdb TO nom_d_utilisateur;
 ```
 
 Quitter l'invite PostgreSQL en tapant :
@@ -213,70 +282,23 @@ Quitter l'invite PostgreSQL en tapant :
 \q
 ```
 
-### 3.3. Configuration initiale du projet Django
-#### 3.3.1. Récupération du dépôt Git
-Se référer à l'[étape 2.1.](#21-r%C3%A9cupération-du-d%C3%A9p%c3%b4t-git).
-
-#### 3.3.2. Création et activation de l'environnement Python virtuel
-Se référer à l'[étape 2.2.](#22-cr%C3%A9ation-et-activation-de-lenvironnement-python-virtuel).
-
-#### 3.3.3. Installation des dépendances requises avec PIP
-Dans un premier temps, se référer à l'[étape 2.3.](#23-installation-des-d%C3%A9pendances-requises-avec-pip)
-
-Puis, en se plaçant dans le répertoire du projet Django, installer le serveur Gunicorn et l'adaptateur PostgreSQL grâce à la commande :
-```bash
-pip install -r requirements_prod.txt
-```
-
-#### 3.3.4. Création d'une variable d'environnement pour la production
-Ajouter la ligne 
-```
-export DJANGO_PRODUCTION=true
-```
-au fichier `~/.bashrc` (par exemple avec l'éditeur nano, grâce à la commande `sudo nano ~/.bashrc`).
-
-Le projet Django applique par défaut les paramètres de développement, mais avec cette variable **les paramètres de production (fichier `settings_prod.py` du répertoire `gsb`) seront appliqués.** 
-
-#### 3.3.5. Ajustement des paramètres du projet
-Se placer dans le répertoire du projet et ouvrir le fichier `settings_prod.py` (situé dans le répertoire `gsb`) :
-```
-nano gsb/settings_prod.py
-```
-
-Localiser la directive ALLOWED_HOSTS.
-
-Dans les crochets, lister les adresses IP ou les noms de domaine associés au serveur Django. Chaque élément devrait être listé dans des guillemets avec les entrées séparées par une virgule. 
-
-De plus, il convient d'inclure `localhost` parmi les options, car une instance locale de Nginx sera utilisée comme proxy pour les connexions.
-
-Exemple :
-
-```
-ALLOWED_HOSTS = ['localhost', 'exempledesite.abc', '123.456.123.789']
-```
-
-La section qui concerne les bases de données commence par `DATABASES`. Elle est préconfigurée pour fonctionner avec la base de données créée précédemment au point 3.2.
-
-Enfin, deux lignes concernent les fichiers statiques (fichiers CSS, JavaScript, logo...). `STATIC_URL` définit l'URL qui rend accessibles les fichiers statiques, `STATIC_ROOT` indique à Django dans quel répertoire placer les fichiers statiques pour que Nginx puisse ensuite traiter les requêtes les concernant (cf. point suivant).
-
-Nous avons choisi de définir l'URL à `/static/` et le répertoire à `staticfiles`.
-
-#### 3.3.6. Terminer la configuration initiale du projet
-Dans un premier temps, appliquer les étapes [2.4.](#24-cr%C3%A9ation-et-ex%C3%A9cution-des-migrations) et [2.5.](#25-chargement-du-jeu-de-donn%C3%A9es-initial-dans-la-base-de-donn%C3%A9es).
+### 3.5. Terminer la configuration du projet Django
+Dans un premier temps, appliquer les étapes [2.4](#24-cr%C3%A9ation-et-ex%C3%A9cution-des-migrations) et [2.5](#25-chargement-du-jeu-de-donn%C3%A9es-initial-dans-la-base-de-donn%C3%A9es).
 
 Puis se placer dans le répertoire du projet Django et exécuter la commande :
 ```bash
 python manage.py collectstatic
 ```
 
-Les fichiers statiques sont placés dans le répertoire `staticfiles`, situé à la racine du projet.
+Les fichiers statiques sont alors placés dans le répertoire `staticfiles`, situé à la racine du projet.
 
 La configuration de l'application Django est terminée. On peut maintenant désactiver l'environnement virtuel :
 ```bash
 deactivate
 ```
 
-### 3.4. Création de fichiers de socket et de service systemd pour Gunicorn
+
+### 3.6. Création de fichiers de socket et de service systemd pour Gunicorn
 > Le socket de Gunicorn sera créée au démarrage et écoutera les connexions. Lorsqu'une connexion est établie, systemd démarrera automatiquement le processus de Gunicorn pour gérer la connexion.
 
 Créer et ouvrir un fichier de socket de systemd pour Gunicorn avec les privilèges `sudo` :
@@ -336,7 +358,7 @@ sudo systemctl start gunicorn.socket
 sudo systemctl enable gunicorn.socket
 ```
 
-### 3.5. Configuration de Nginx
+### 3.7. Configuration de Nginx
 Créer un bloc serveur (VirtualHost Nginx) à l'aide de la commande :
 ```bash
 sudo nano /etc/nginx/sites-available/gsb
@@ -382,7 +404,7 @@ Enfin, il faut ouvrir le pare-feu au trafic normal sur le port 80 :
 sudo ufw allow 'Nginx Full'
 ```
 
-### 3.6. Sécurisation de Nginx avec Let's Encrypt
+### 3.8. Sécurisation de Nginx avec Let's Encrypt
 Pour activer le chiffrement HTTPS du site, il est possible de configurer un certificat TLS/SSL avec Let's Encrypt.
 
 Nous ne détaillons pas ici la procédure, car elle est optionnelle
