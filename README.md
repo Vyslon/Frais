@@ -211,21 +211,22 @@ Exemple :
 ```
 ALLOWED_HOSTS = ['localhost', 'exempledesite.abc', '123.456.123.789']
 ```
-
-> La clé secrète (`SECRET_KEY`) ainsi que les identifiants de l'utilisateur de la base de données (`USER` et `PASSWORD` de la section `DATABASES`) sont configurés pour récupérer leur valeur depuis les variables d'environnement. En effet, ces valeurs sont confidentielles et ne doivent pas être stockées dans le dépôt Git.
+> **Notes**
 > 
+> La clé secrète (`SECRET_KEY`) ainsi que les identifiants de l'utilisateur de la base de données (`USER` et `PASSWORD` de la section `DATABASES`) sont configurés pour récupérer leur valeur depuis les variables d'environnement. En effet, ces valeurs sont confidentielles et ne doivent pas être stockées dans le dépôt Git.
+>
 > Nous définirons les variables d'environnement dans le point suivant.
-
-Enfin, deux lignes concernent les fichiers statiques (fichiers CSS, JavaScript, logo...). `STATIC_URL` définit l'URL qui rend accessibles les fichiers statiques, `STATIC_ROOT` indique à Django dans quel répertoire placer les fichiers statiques pour que Nginx puisse ensuite traiter les requêtes les concernant (cf. point suivant).
-
-Nous avons choisi de définir l'URL à `/static/` et le répertoire à `staticfiles`.
+>
+> Enfin, deux lignes concernent les fichiers statiques (fichiers CSS, JavaScript, logo...). `STATIC_URL` définit l'URL qui rend accessibles les fichiers statiques, `STATIC_ROOT` indique à Django dans quel répertoire placer les fichiers statiques pour que Nginx puisse ensuite traiter les requêtes les concernant (cf. point suivant).
+>
+> Nous avons choisi de définir l'URL à `/static/` et le répertoire à `staticfiles`.
 
 ### 3.3. Création des variables d'environnement
 Le projet Django doit être configuré différemment selon qu'il est utilisé en phase de développement ou de production.
 
 Nous allons donc spécifier les variables propres à l'environnement de production.
 
-> Tout d'abord, la [clé secrète de Django](https://docs.djangoproject.com/fr/3.2/ref/settings/#secret-key) doit rester confidentielle et ne doit pas apparaître dans les paramètres du fichier `settings_prod.py` du dépôt Git. Pour cela, nous la générons  depuis le serveur de production et demandons à Django de la chercher dans les variables d'environnement.
+Tout d'abord, la [clé secrète de Django](https://docs.djangoproject.com/fr/3.2/ref/settings/#secret-key) doit rester confidentielle et ne doit pas apparaître dans les paramètres du fichier `settings_prod.py` du dépôt Git. Pour cela, nous la générons  depuis le serveur de production et demandons à Django de la chercher dans les variables d'environnement.
 
 Il faut donc générer la clé secrète de Django pour la production. Pour cela, saisir dans le terminal la commande :
 ```bash
