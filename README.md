@@ -231,7 +231,7 @@ pip install -r requirements_prod.txt
 #### 3.3.4. Création d'une variable d'environnement pour la production
 Ajouter la ligne 
 ```
-export DJANGO_DEVELOPMENT=true
+export DJANGO_PRODUCTION=true
 ```
 au fichier `~/.bashrc` (par exemple avec l'éditeur nano, grâce à la commande `sudo nano ~/.bashrc`).
 
