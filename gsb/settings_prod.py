@@ -1,10 +1,11 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_%$qy=(_-$5)dv-dl^b1+p$)^o3la+x2s=gwqwb-s9qpzs2w90'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -19,8 +20,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'gsbdb',
-        'USER': 'gsbuser',
-        'PASSWORD': 'gsbpwd',
+        'USER': os.environ.get('DJANGO_DB_USER'),
+        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD'),
         'HOST': '127.0.0.1',
         'PORT': '',
     }
