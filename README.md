@@ -236,7 +236,7 @@ python -c 'from django.core.management.utils import get_random_secret_key; print
 La clé ainsi générée (par exemple `cnp-j0%wd_zab+l=d+v7&rw3p7h!tyu4tzzpz=ypm^$(-8+^t^`) s'affiche alors. La copier.
 
 Ouvrir le fichier `~/.bashrc` (par exemple avec l'éditeur nano, grâce à la commande `sudo nano ~/.bashrc`) et lui ajouter les lignes suivantes :
-```
+```bash
 export DJANGO_PRODUCTION = true
 export DJANGO_SECRET_KEY = 'cnp-j0%wd_zab+l=d+v7&rw3p7h!tyu4tzzpz=ypm^$(-8+^t^'
 export DJANGO_DB_USER = 'nom_d_utilisateur'
