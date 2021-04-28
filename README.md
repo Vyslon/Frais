@@ -98,7 +98,7 @@ Une autre application sera développée dans un second temps pour permettre au p
   
 ### 2.1. Récupération du dépôt git
 ```
-git clone https://github.com/th-thomas/gsb-frais/
+git clone https://github.com/th-thomas/Frais/
 ```
 
 ### 2.2. Création et activation de l'environnement Python virtuel 
