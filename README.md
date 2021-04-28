@@ -196,7 +196,7 @@ pip install -r requirements_prod.txt
 
 #### 3.2.4. Ajustement des paramètres du projet
 Se placer dans le répertoire du projet et ouvrir le fichier `settings_prod.py` (situé dans le répertoire `gsb`) :
-```
+```bash
 nano gsb/settings_prod.py
 ```
 
