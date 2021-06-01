@@ -108,10 +108,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR.joinpath('static')
+    BASE_DIR / 'static'
 ]
 
-STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Auth model
 AUTH_USER_MODEL = 'ppefrais.Visiteur'
