@@ -32,3 +32,5 @@ STATIC_URL = '/static/'
 # afin que Nginx puisse traiter les requêtes pour ces éléments
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+import django_heroku
+django_heroku.settings(locals())
