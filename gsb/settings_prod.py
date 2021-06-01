@@ -12,7 +12,7 @@ DEBUG = False
 
 # Adresses auxquelles le site est accessible
 # Exemple : ['localhost', 'exempledesite.abc', '123.456.123.789']
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ppe-frais.herokuapp.com/']
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
