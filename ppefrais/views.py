@@ -96,9 +96,10 @@ def fiches_frais(request):
 
     ficheFrais = FicheFrais\
         .objects\
-        .filter(visiteur=usr)\
-        .order_by('-mois')\
-        .extra(where=['mois>=%s'], params=[str(dateMinimum)])
+        .filter(visiteur=usr, mois__gte=dateMinimum)\
+        .order_by('-mois')
+    #  \
+    #  .extra(where=['mois>=%s'], params=[str(dateMinimum)])
 
     context = {
         'fiches': ficheFrais
