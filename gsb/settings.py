@@ -125,4 +125,4 @@ LOGOUT_REDIRECT_URL = 'login'
 # (cela doit impérativement être le cas sur le serveur de production),
 # alors on utilise les paramètres du fichier settings_prod.py
 if os.environ.get('DJANGO_PRODUCTION'):
-    from settings_prod import *
+    from .settings_prod import *
