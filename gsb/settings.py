@@ -126,6 +126,5 @@ LOGOUT_REDIRECT_URL = 'login'
 # alors on utilise les paramètres du fichier settings_prod.py
 if os.environ.get('DJANGO_PRODUCTION'):
     from .settings_prod import *
-
-import django_heroku
-django_heroku.settings(locals())
+    import django_heroku
+    django_heroku.settings(locals())
