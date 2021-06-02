@@ -85,6 +85,7 @@ Une autre application sera développée dans un second temps pour permettre au p
 + Génération de fichiers PDF téléchargeables et au contenu dynamique grâce à un module Python
 + Système de contrôle de version : Git
 + Livraison incrémentale du projet grâce à la méthode Scrum
++ Déploiement d'une application Django (Python) sur un serveur de production et sécurisation par protocole HTTPS
  
 ---
 
