@@ -2,9 +2,8 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib import auth
 from django.contrib.auth import get_user_model
-CustomUser = get_user_model()
 
-# HTTP Codes tests :
+CustomUser = get_user_model()
 
 
 class HomePageTestCase(TestCase):
@@ -13,12 +12,12 @@ class HomePageTestCase(TestCase):
         self.user = CustomUser.objects.create_user('temporary', 'temporary@gmail.com', 'temporary')
 
     def test_index_page_not_connected_redirection(self):
-        response = self.client.get(reverse('accueil'))
+        response = self.client.get(reverse('les-fiches'))
         self.assertEqual(response.status_code, 302)
 
     def test_index_page_connected(self):
         self.client.login(username='temporary', password='temporary')
-        response = self.client.get(reverse('accueil'))
+        response = self.client.get(reverse('les-fiches'))
         self.assertEqual(response.status_code, 200)
 
 
